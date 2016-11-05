@@ -252,7 +252,7 @@ body {
     -o-animation: slide 8s linear infinite;
     -ms-animation: slide 8s linear infinite;
     animation: slide 8s linear infinite;
-    background-image: url(../images/stars.svg);
+    background-image: url(../images/cc/stars.svg);
     background-position: center center;
     /*z-index: 1;*/
     

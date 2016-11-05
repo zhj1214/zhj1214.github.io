@@ -245,7 +245,7 @@ body {
   width: 400px;
   height: 100%;
   overflow: hidden;
-  /*background-color: #333;*/
+  background-color: #060912;
  
  -webkit-animation: slide 8s linear infinite;
     -moz-animation: slide 8s linear infinite;
@@ -254,9 +254,7 @@ body {
     animation: slide 8s linear infinite;
     background-image: url(../images/cc/stars.svg);
     background-position: center center;
-    background-size: 240px;
     position: absolute;
-    /*z-index: 1;*/
     
   color: #fff;
   text-align: right;

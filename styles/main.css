@@ -246,6 +246,19 @@ body {
   height: 100%;
   overflow: hidden;
   background-color: #060912;
+  
+  -webkit-animation: slide 8s linear infinite;
+    -moz-animation: slide 8s linear infinite;
+    -o-animation: slide 8s linear infinite;
+    -ms-animation: slide 8s linear infinite;
+    animation: slide 8s linear infinite;
+    background-image: url(../images/cc/stars.svg);
+    background-position: center center;
+    -webkit-background-size: 240px;
+    -moz-background-size: 240px;
+    background-size: 240px;
+    position: absolute;
+    
   color: #fff;
   text-align: right;
 }

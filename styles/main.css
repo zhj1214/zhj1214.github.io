@@ -245,7 +245,7 @@ body {
   width: 400px;
   height: 100%;
   overflow: hidden;
-  /*background-color: #333;*/
+  background-color: #333;
   color: #fff;
   text-align: right;
 }

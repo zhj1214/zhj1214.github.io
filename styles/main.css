@@ -254,6 +254,8 @@ body {
     animation: slide 8s linear infinite;
     background-image: url(../images/cc/stars.svg);
     background-position: center center;
+    background-size: 240px;
+    position: absolute;
     /*z-index: 1;*/
     
   color: #fff;

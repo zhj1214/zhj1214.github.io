@@ -254,15 +254,7 @@ body {
     animation: slide 8s linear infinite;
     background-image: url(../images/stars.svg);
     background-position: center center;
-    -webkit-background-size: 240px;
-    -moz-background-size: 240px;
-    background-size: 240px;
-    height: 400%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 400%;
-    z-index: 1;
+    /*z-index: 1;*/
     
   color: #fff;
   text-align: right;

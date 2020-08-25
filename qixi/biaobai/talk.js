@@ -1,3 +1,34 @@
+(function () {
+  function getQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    let param = decodeURIComponent(window.location.search);
+    var r = param.substr(1).match(reg);
+    if (r != null) return unescape(r[2]);
+    return null;
+  }
+  //   ,"https://zhj1214.github.io/qixi/biaobai/fire.html?qx=我/爱/你"
+  let url = getQueryString("qx");
+  var arr;
+  if (url) {
+    arr = url.split("/");
+    if (arr.length > 0) {
+      $(".page_one").addClass("hide");
+      $(".page_two").removeClass("hide");
+
+      fireworks();
+    }
+  } else {
+    arr = ["2020.08.25", "起", "一", "在", "高芳", "和"];
+  }
+  var list = document.getElementById("listView");
+  arr.forEach((item) => {
+    var para = document.createElement("div");
+    para.className = "shape";
+    para.innerHTML = item;
+    list.appendChild(para);
+  });
+})();
+
 $(function () {
   $("#yes").click(function (event) {
     modal("爱笑的姑娘最可爱。(^_^)", function () {
@@ -79,3 +110,5 @@ function modal(content, callback) {
     callback();
   });
 }
+
+// exports = { fireworks: fireworks };

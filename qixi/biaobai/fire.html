@@ -27,13 +27,14 @@
     <link href="modal.css" rel="stylesheet" />
   </head>
   <body onselectstart="return false">
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     <!--对话部分-->
-    <div class="share_img"><img src="a8b.png" alt="" /></div>
+    <div class="share_img"><img src="a8b.png"  /></div>
 
     <div class="page_one">
       <div class="content">
         <div class="text_wrapper">
-          <img src="a8.png" alt="" />
+          <img src="a8.png"  />
           <div class="text">
             宝儿，七夕快乐
           </div>
@@ -51,32 +52,20 @@
       浏览器不支持canvas
     </canvas>
     <div class="city">
-      <img src="city.png" alt="" />
+      <img src="city.png"  />
     </div>
-    <img src="moon.png" alt="" id="moon" style="visibility: hidden;" />
-    <div style="display: none;">
-      <div class="shape">
-        2020.08.25
-      </div>
-      <div class="shape">
-        和
-      </div>
-      <div class="shape">
-        高芳
-      </div>
-      <div class="shape">
-        在
-      </div>
-      <div class="shape">
-        一
-      </div>
-      <div class="shape">
-        起
-      </div>
+    <img src="moon.png"  id="moon" style="visibility: hidden;" />
+    <div id="listView" style="display: none;"></div>
     </div>
+    
+    
+   
+    </script>
     <!--音乐部分-->
     <audio autoplay loop id="music">
-      <source src="https://7a68-zhj1214-525887-1302318805.tcb.qcloud.la/zhjphoto/music.mp3" />
+      <source
+        src="https://7a68-zhj1214-525887-1302318805.tcb.qcloud.la/zhjphoto/music.mp3"
+      />
     </audio>
     <iframe
       id="iframMusic"

@@ -33,7 +33,11 @@
       $("#shengcheng").click(function (event) {
         var name = $('input[name="param"]').val();
         if (!name) return;
+        
+        name = encodeURIComponent(name)
+        console.log(name)
         name = "https://zhj1214.github.io/qixi/biaobai/fire.html?qx=" + name;
+        console.log(name)
         // console.log(name)
         $(".qrcodeView").attr("style", "display:block;"); //显示div
         if (qr) {

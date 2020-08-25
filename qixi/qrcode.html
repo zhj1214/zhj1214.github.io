@@ -17,17 +17,17 @@
     <div class="title" style="margin-top: 3vh;">
       请输入你要展示的文字，例如：我/爱/你
     </div>
-    <div class="title" style="margin: 20px 0px;">
+    <div class="title" style="margin: 5px 0px;">
       ”/“隔开，表示一个烟花代表一个汉字
     </div>
     <input id="param" type="text" name="param" />
     <div class="qrcodeView" style="display: none;">
       <div id="qrcode" style="display: flex; justify-content: center;"></div>
     </div>
-    <div class="title" style="margin: 20px 0px;">
+    <div class="title">
       1.微信长按识别二维码
     </div>
-    <div class="title" style="margin: 20px 0px;">
+    <div class="title">
       2.截屏保存二维码，扫码查看效果
     </div>
 
@@ -59,6 +59,8 @@
     <style>
       #param {
         width: 80vw;
+        height: 38px;
+        font-size: 18px;
         margin: 4vw 0px 4vw 10vw;
       }
       .qrcodeView {
@@ -76,8 +78,8 @@
         font-size: 16px;
       }
       .bottom {
-          display: flex;
-          justify-content: center;
+        display: flex;
+        justify-content: center;
         position: fixed;
         bottom: 36px;
         width: 100%;

@@ -25,7 +25,7 @@
       <div id="qrcode" style="display: flex; justify-content: center;"></div>
     </div>
     <div class="title" style="margin: 20px 0px;">
-      截屏保存二维码，扫码查看效果
+      1.微信长按识别二维码 2.截屏保存二维码，扫码查看效果
     </div>
     <div id="shengcheng" class="bottom title">生成二维码</div>
     <script type="text/javascript">
@@ -33,11 +33,11 @@
       $("#shengcheng").click(function (event) {
         var name = $('input[name="param"]').val();
         if (!name) return;
-        
-        name = encodeURIComponent(name)
-        console.log(name)
+
+        name = encodeURIComponent(name);
+        console.log(name);
         name = "https://zhj1214.github.io/qixi/biaobai/fire.html?qx=" + name;
-        console.log(name)
+        console.log(name);
         // console.log(name)
         $(".qrcodeView").attr("style", "display:block;"); //显示div
         if (qr) {
@@ -47,7 +47,7 @@
         }
       });
     </script>
-    
+
     <style>
       #param {
         width: 80vw;

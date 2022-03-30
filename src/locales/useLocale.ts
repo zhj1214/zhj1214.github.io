@@ -1,7 +1,15 @@
+/*
+ * @Description:
+ * @Version: 0.0.1
+ * @Autor: zhj1214
+ * @Date: 2022-03-25 14:09:39
+ * @LastEditors: zhj1214
+ * @LastEditTime: 2022-03-25 17:05:31
+ */
 /**
  * Multi-language related operations
  */
-import type { LocaleType } from '/#/config';
+import type { LocaleType } from '/#/config'; // 从另一个模块中导入数据类型。文件路径：types/config.d.ts   导出：export type LocaleType = 'zh_CN' | 'en' | 'ru' | 'ja' | 'ko';
 
 import { i18n } from './setupI18n';
 import { useLocaleStoreWithOut } from '/@/store/modules/locale';

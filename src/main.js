@@ -4,7 +4,7 @@
  * @Autor: zhj1214
  * @Date: 2021-11-15 15:10:02
  * @LastEditors: zhj1214
- * @LastEditTime: 2022-05-10 17:55:46
+ * @LastEditTime: 2022-05-11 16:38:54
  */
 import { createApp } from "vue";
 import App from "./App.vue";
@@ -34,22 +34,21 @@ createApp(App).use(store).use(router).mount("#app");
 // 在主应用中注册微应用
 registerMicroApps(
   [
-    // {
-    //   name: "my-react", // app name registered
-    //   // entry: "//36.133.84.100:23502/wqd/react/",
-    //   entry: "//zhj1214.gitee.io/wqd-react/", // 这里是重点 gitee
-    //   container: "#contentapp",
-    //   activeRule: "/wqd_main/wqd-react",
-    //   loader,
-    // },
+    {
+      name: "my-react", // app name registered
+      // entry: "//36.133.84.100:23502/wqd/react/",
+      entry: "//zhj1214.gitee.io/wqd-react/", // 这里是重点 gitee
+      container: "#contentapp",
+      activeRule: "/wqd-react",
+      loader,
+    },
     {
       name: "my-vue",
       // entry: { scripts: ["//localhost:7100/main.js"] },
-      entry: "//localhost:7000/wqd_main/wqd-vue/", // 这里是重点 开发
-      // entry: "//36.133.84.100:23502/wqd/vue/", // 这里是重点 生产
-      // entry: "//zhj1214.gitee.io/wqd-vue/", // 这里是重点 gitee
+      // entry: "//localhost:7000/wqd_main/wqd-vue/", // 这里是重点 开发
+      entry: "//zhj1214.gitee.io/wqd-vue/", // 这里是重点 gitee
       container: "#contentapp",
-      activeRule: "/wqd_main/wqd-vue/",
+      activeRule: "/wqd-vue",
       loader,
     },
   ],

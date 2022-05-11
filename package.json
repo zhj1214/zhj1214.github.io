@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "public": "yarn build;yarn acp '打包-部署'",
     "preacp": "git add .",
     "acp": "git commit -m",
     "postacp": "git pull;git push;",

@@ -4,7 +4,7 @@
  * @Autor: zhj1214
  * @Date: 2021-11-15 15:10:02
  * @LastEditors: zhj1214
- * @LastEditTime: 2022-05-10 17:48:46
+ * @LastEditTime: 2022-05-11 16:45:41
 -->
 <template>
   <div id="nav" class="view">
@@ -47,7 +47,7 @@ export default defineComponent({
   methods: {
     jump(val) {
       console.log("val", val);
-      if (!val) this.$router.push("/wqd_main/wqd-vue/");
+      if (!val) this.$router.push("/wqd-vue/");
       else this.$router.push("/wqd-react");
     },
   },

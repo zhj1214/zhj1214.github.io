@@ -1,21 +1,39 @@
 <template>
-  <ConfigProvider :locale="getAntdLocale">
-    <AppProvider>
-      <RouterView />
-    </AppProvider>
-  </ConfigProvider>
+  <div id="app">
+    <el-config-provider :locale="locale">
+      <router-view />
+    </el-config-provider>
+  </div>
 </template>
 
-<script lang="ts" setup>
-  import { ConfigProvider } from 'ant-design-vue';
-  import { AppProvider } from '/@/components/Application';
-  import { useTitle } from '/@/hooks/web/useTitle';
-  import { useLocale } from '/@/locales/useLocale';
+<script>
+import { onBeforeUnmount, onMounted, defineComponent } from "vue";
+import { ElConfigProvider } from "element-plus";
+import zhCn from "element-plus/lib/locale/lang/zh-cn";
+import { beforeunloadFn, beforeonunload } from "./utils/closeWindow.ts"; // 关闭窗口提示
 
-  import 'dayjs/locale/zh-cn';
-  // support Multi-language
-  const { getAntdLocale } = useLocale();
+export default defineComponent({
+  components: {
+    ElConfigProvider,
+  },
+  setup() {
+    onMounted(() => {
+      window.addEventListener("beforeunload", beforeunloadFn);
+      window.addEventListener("unload", beforeonunload);
+    });
 
-  // Listening to page changes and dynamically changing site titles
-  useTitle();
+    onBeforeUnmount(() => {
+      window.removeEventListener("beforeunload", beforeunloadFn);
+      window.removeEventListener("unload", beforeonunload);
+    });
+
+    return {
+      locale: zhCn,
+    };
+  },
+});
 </script>
+
+<style lang="scss">
+@import url("./styles/common.scss");
+</style>

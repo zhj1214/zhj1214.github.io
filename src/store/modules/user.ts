@@ -1,177 +1,125 @@
-import type { UserInfo } from '/#/store';
-import type { ErrorMessageMode } from '/#/axios';
-import { defineStore } from 'pinia';
-import { store } from '/@/store';
-import { RoleEnum } from '/@/enums/roleEnum';
-import { PageEnum } from '/@/enums/pageEnum';
-import { ROLES_KEY, TOKEN_KEY, USER_INFO_KEY } from '/@/enums/cacheEnum';
-import { getAuthCache, setAuthCache } from '/@/utils/auth';
-import { GetUserInfoModel, LoginParams } from '/@/api/sys/model/userModel';
-import { doLogout, getUserInfo, loginApi } from '/@/api/sys/user';
-import { useI18n } from '/@/hooks/web/useI18n';
-import { useMessage } from '/@/hooks/web/useMessage';
-import { router } from '/@/router';
-import { usePermissionStore } from '/@/store/modules/permission';
-import { RouteRecordRaw } from 'vue-router';
-import { PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
-import { isArray } from '/@/utils/is';
-import { h } from 'vue';
+import { STORAGE } from "@/utils/constant";
+import { localStorage } from "@/utils/localStorage";
+import { login, getInfo, logout } from "@/apis/login";
 
-interface UserState {
-  userInfo: Nullable<UserInfo>;
-  token?: string;
-  roleList: RoleEnum[];
-  sessionTimeout?: boolean;
-  lastUpdateTime: number;
-}
+const welcome = () => {
+  const arr = [
+    "休息一会儿吧",
+    "准备吃什么呢?",
+    "要不要打一把 DOTA",
+    "我猜你可能累了",
+  ];
+  const index = Math.floor(Math.random() * arr.length);
+  return arr[index];
+};
 
-export const useUserStore = defineStore({
-  id: 'app-user',
-  state: (): UserState => ({
-    // user info
-    userInfo: null,
-    // token
-    token: undefined,
-    // roleList
-    roleList: [],
-    // Whether the login expired
-    sessionTimeout: false,
-    // Last fetch time
-    lastUpdateTime: 0,
-  }),
-  getters: {
-    getUserInfo(): UserInfo {
-      return this.userInfo || getAuthCache<UserInfo>(USER_INFO_KEY) || {};
+export default {
+  namespaced: true,
+  state: {
+    token: "",
+    name: "",
+    welcome: "",
+    avatar: "",
+    roles: [],
+    info: {},
+  },
+
+  mutations: {
+    SET_TOKEN: (state: AnyObject, token: any) => {
+      state.token = token;
     },
-    getToken(): string {
-      return this.token || getAuthCache<string>(TOKEN_KEY);
+    SET_NAME: (state: AnyObject, param: AnyObject) => {
+      state.name = param.name;
+      state.welcome = param.welcomeValue;
     },
-    getRoleList(): RoleEnum[] {
-      return this.roleList.length > 0 ? this.roleList : getAuthCache<RoleEnum[]>(ROLES_KEY);
+    SET_AVATAR: (state: AnyObject, avatar: any) => {
+      state.avatar = avatar;
     },
-    getSessionTimeout(): boolean {
-      return !!this.sessionTimeout;
+    SET_ROLES: (state: AnyObject, roles: any) => {
+      state.roles = roles;
     },
-    getLastUpdateTime(): number {
-      return this.lastUpdateTime;
+    SET_INFO: (state: AnyObject, info: any) => {
+      state.info = info;
     },
   },
+
   actions: {
-    setToken(info: string | undefined) {
-      this.token = info ? info : ''; // for null or undefined value
-      setAuthCache(TOKEN_KEY, info);
-    },
-    setRoleList(roleList: RoleEnum[]) {
-      this.roleList = roleList;
-      setAuthCache(ROLES_KEY, roleList);
-    },
-    setUserInfo(info: UserInfo | null) {
-      this.userInfo = info;
-      this.lastUpdateTime = new Date().getTime();
-      setAuthCache(USER_INFO_KEY, info);
-    },
-    setSessionTimeout(flag: boolean) {
-      this.sessionTimeout = flag;
-    },
-    resetState() {
-      this.userInfo = null;
-      this.token = '';
-      this.roleList = [];
-      this.sessionTimeout = false;
-    },
-    /**
-     * @description: login
-     */
-    async login(
-      params: LoginParams & {
-        goHome?: boolean;
-        mode?: ErrorMessageMode;
-      },
-    ): Promise<GetUserInfoModel | null> {
-      try {
-        const { goHome = true, mode, ...loginParams } = params;
-        const data = await loginApi(loginParams, mode);
-        const { token } = data;
-
-        // save token
-        this.setToken(token);
-        return this.afterLoginAction(goHome);
-      } catch (error) {
-        return Promise.reject(error);
-      }
-    },
-    async afterLoginAction(goHome?: boolean): Promise<GetUserInfoModel | null> {
-      if (!this.getToken) return null;
-      // get user info
-      const userInfo = await this.getUserInfoAction();
-
-      const sessionTimeout = this.sessionTimeout;
-      if (sessionTimeout) {
-        this.setSessionTimeout(false);
-      } else {
-        const permissionStore = usePermissionStore();
-        if (!permissionStore.isDynamicAddedRoute) {
-          const routes = await permissionStore.buildRoutesAction();
-          routes.forEach((route) => {
-            router.addRoute(route as unknown as RouteRecordRaw);
+    // 登录
+    Login(context: AnyObject, userInfo: AnyObject) {
+      return new Promise((resolve, reject) => {
+        login(userInfo)
+          .then((response: AnyObject) => {
+            const { data } = response;
+            // const num = 7 * 24 * 60 * 60 * 1000;
+            localStorage.setItem(STORAGE.TOKEN, data.token);
+            context.commit("SET_TOKEN", data.token);
+            resolve(data);
+          })
+          .catch((error: AnyObject) => {
+            reject(error);
           });
-          router.addRoute(PAGE_NOT_FOUND_ROUTE as unknown as RouteRecordRaw);
-          permissionStore.setDynamicAddedRoute(true);
-        }
-        goHome && (await router.replace(userInfo?.homePath || PageEnum.BASE_HOME));
-      }
-      return userInfo;
-    },
-    async getUserInfoAction(): Promise<UserInfo | null> {
-      if (!this.getToken) return null;
-      const userInfo = await getUserInfo();
-      const { roles = [] } = userInfo;
-      if (isArray(roles)) {
-        const roleList = roles.map((item) => item.value) as RoleEnum[];
-        this.setRoleList(roleList);
-      } else {
-        userInfo.roles = [];
-        this.setRoleList([]);
-      }
-      this.setUserInfo(userInfo);
-      return userInfo;
-    },
-    /**
-     * @description: logout
-     */
-    async logout(goLogin = false) {
-      if (this.getToken) {
-        try {
-          await doLogout();
-        } catch {
-          console.log('注销Token失败');
-        }
-      }
-      this.setToken(undefined);
-      this.setSessionTimeout(false);
-      this.setUserInfo(null);
-      goLogin && router.push(PageEnum.BASE_LOGIN);
+      });
     },
 
-    /**
-     * @description: Confirm before logging out
-     */
-    confirmLoginOut() {
-      const { createConfirm } = useMessage();
-      const { t } = useI18n();
-      createConfirm({
-        iconType: 'warning',
-        title: () => h('span', t('sys.app.logoutTip')),
-        content: () => h('span', t('sys.app.logoutMessage')),
-        onOk: async () => {
-          await this.logout(true);
-        },
+    // 获取用户信息
+    GetInfo(context: AnyObject) {
+      return new Promise((resolve, reject) => {
+        getInfo()
+          .then((response: AnyObject) => {
+            const { data } = response;
+
+            if (data.role && data.role.permissions.length > 0) {
+              const { role } = data;
+              role.permissions = data.role.permissions;
+              role.permissions.map((per: AnyObject) => {
+                if (
+                  per.actionEntitySet != null &&
+                  per.actionEntitySet.length > 0
+                ) {
+                  const action = per.actionEntitySet.map((act: AnyObject) => {
+                    return act.action;
+                  });
+                  per.actionList = action;
+                }
+              });
+              role.permissionList = role.permissions.map(
+                (permission: AnyObject) => {
+                  return permission.permissionId;
+                }
+              );
+              context.commit("SET_ROLES", data.role);
+              context.commit("SET_INFO", data);
+            } else {
+              debugger;
+              reject(new Error("getInfo: roles must be a non-null array !"));
+            }
+
+            context.commit("SET_NAME", { name: data.name, welcome: welcome() });
+            context.commit("SET_AVATAR", data.avatar);
+
+            resolve(response);
+          })
+          .catch((error: AnyObject) => {
+            reject(error);
+          });
+      });
+    },
+
+    // 登出
+    Logout(context: AnyObject) {
+      return new Promise<void>((resolve) => {
+        logout()
+          .then(() => {
+            context.commit("SET_TOKEN", "");
+            context.commit("SET_ROLES", []);
+            localStorage.removeItem(STORAGE.TOKEN);
+            resolve();
+          })
+          .catch((err: AnyObject) => {
+            console.log("logout fail:", err);
+            // resolve()
+          });
       });
     },
   },
-});
-
-// Need to be used outside the setup
-export function useUserStoreWithOut() {
-  return useUserStore(store);
-}
+};

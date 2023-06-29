@@ -1,12 +1,3 @@
-/*
- * @Description: 菜单权限控制
- * @Version: 0.0.1
- * @Autor: zhj1214
- * @Date: 2021-11-29 13:46:00
- * @LastEditors: zhj1214
- * @LastEditTime: 2022-05-16 16:16:29
- */
-
 // import store from "./store";
 // import storage from "store";
 // import { ACCESS_TOKEN } from "@utils/constant";
@@ -36,15 +27,14 @@ NProgress.configure({ showSpinner: false }); // NProgress Configuration
 const allowList = ["test", "login", "register", "registerResult"]; // no redirect allowList
 const loginRoutePath = "/user/login"; // 登录页面
 
+// 没有网络也可以创建和加载菜单；
 const syncRouter = async () => {
   return new Promise<void>((resolve) => {
-    // 判断本地路由配置是否有变动
-    if (storage.getItem(MENU_KEYS.ADD).length > 0) {
-      console.log("有新的路由需要提交");
+    function add() {
       const arr: any = [];
       let adds = storage.getItem(MENU_KEYS.ADD);
       adds.forEach((item: any) => {
-        item = { ...item, isNetworkOk: true };
+        item = { ...item, isNetworkOk: true }; // isNetworkOk 当前网络是否正常
         arr.push(store.dispatch("permission/addRouteMenu", item));
       });
       Promise.allSettled(arr).then((results) => {
@@ -61,14 +51,10 @@ const syncRouter = async () => {
         });
         edit();
       });
-    } else if (storage.getItem(MENU_KEYS.EDIT).length > 0) {
-      edit();
-    } else {
-      deletefn();
     }
     function edit() {
       if (storage.getItem(MENU_KEYS.EDIT).length > 0) {
-        console.log("有路由内容发生了编辑，需要更新");
+        console.warn("有路由内容发生了编辑，需要更新");
         const arr: any = [];
         let edits = storage.getItem(MENU_KEYS.EDIT);
         edits.forEach((item: any) => {
@@ -93,7 +79,7 @@ const syncRouter = async () => {
     }
     function deletefn() {
       if (storage.getItem(MENU_KEYS.DELETE).length > 0) {
-        console.log("有路由需要删除");
+        console.warn("有路由需要删除");
         let deleteArr = storage.getItem(MENU_KEYS.DELETE);
         const arr: any = [];
         deleteArr.forEach((item: any) => {
@@ -114,6 +100,15 @@ const syncRouter = async () => {
       } else {
         resolve();
       }
+    }
+    // 判断本地路由配置是否有变动
+    if (storage.getItem(MENU_KEYS.ADD).length > 0) {
+      console.warn("有新的路由需要提交");
+      add();
+    } else if (storage.getItem(MENU_KEYS.EDIT).length > 0) {
+      edit();
+    } else {
+      deletefn();
     }
   });
 };
@@ -136,22 +131,19 @@ router.beforeEach((to: AnyObject, from: AnyObject, next) => {
           syncRouter().then(() => {
             // 根据角色获取用户菜单列表动态增加路由
             store.dispatch("permission/GenerateRoutes", { roles }).then(() => {
-              // 根据roles权限生成可访问的路由表
-              // 动态添加可访问路由表
-              // VueRouter@3.5.0+ New API
-
+              // 1. 根据roles权限生成可访问的路由表
               store.state.permission.addRouters.forEach((r: any) => {
-                router.addRoute(r);
+                router.addRoute(r); // 动态添加可访问路由表 VueRouter@3.5.0+ New API
               });
-              // url链接中有重定向字段 redirect 时，登录自动重定向到该地址
+              // 2. url链接中有重定向字段 redirect 时，登录自动重定向到该地址
               const redirect = decodeURIComponent(
                 from.query.redirect || to.query.redirect || to.path
               );
               if (to.path === redirect) {
-                // set the replace: true so the navigation will not leave a history record
-                next({ ...to, replace: true });
-              } else {
-                // 跳转到目的路由
+                next({ ...to, replace: true }); // set the replace: true so the navigation will not leave a history record
+              }
+              // 3. 跳转到目的路由
+              else {
                 console.log("URL中包含redirect地址：开始重定向页面", redirect);
                 next({ path: redirect });
               }

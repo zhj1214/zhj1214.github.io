@@ -9,6 +9,11 @@
 <script>
 export default {
   name: "UserLayout",
+  data() {
+    return {
+      isMobile: false,
+    };
+  },
   mounted() {
     document.body.classList.add("userLayout");
   },

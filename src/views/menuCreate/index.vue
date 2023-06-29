@@ -1,11 +1,3 @@
-<!--
- * @Description: 
- * @Version: 0.0.1
- * @Autor: zhj1214
- * @Date: 2021-12-11 13:41:01
- * @LastEditors: zhj1214
- * @LastEditTime: 2022-05-20 17:30:29
--->
 <template>
   <div style="display: flex">
     <!-- 左边菜单展示 -->

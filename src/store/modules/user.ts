@@ -1,6 +1,6 @@
 import { STORAGE } from "@/utils/constant";
 import { localStorage } from "@/utils/localStorage";
-import { login, getInfo, logout } from "@/apis/login";
+import { loginRequest, getInfo, logout } from "@/apis/login";
 
 const welcome = () => {
   const arr = [
@@ -47,7 +47,7 @@ export default {
     // 登录
     Login(context: AnyObject, userInfo: AnyObject) {
       return new Promise((resolve, reject) => {
-        login(userInfo)
+        loginRequest(userInfo)
           .then((response: AnyObject) => {
             const { data } = response;
             // const num = 7 * 24 * 60 * 60 * 1000;

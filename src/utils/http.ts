@@ -1,12 +1,3 @@
-/*
- * @Description:
- * @Version: 0.0.1
- * @Autor: zhj1214
- * @Date: 2021-11-25 10:39:18
- * @LastEditors: zhj1214
- * @LastEditTime: 2022-05-12 16:15:58
- */
-
 import axios from "axios";
 import { localStorage } from "@/utils/localStorage";
 import { STORAGE } from "@/utils/constant";

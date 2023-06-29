@@ -1,6 +1,6 @@
 // eslint-disable-next-line
-import HelloWorld from "@/components/HelloWorld.vue";
-import { defineAsyncComponent } from "vue";
+// import HelloWorld from "@/components/HelloWorld.vue";
+import { defineAsyncComponent, markRaw } from "vue";
 import { UserLayout } from "@/layouts";
 import Vuex from "@/views/vuexView.vue";
 
@@ -42,7 +42,7 @@ export const constantRouterMap = [
   },
   {
     path: "/user",
-    component: UserLayout,
+    component: markRaw(UserLayout),
     redirect: "/user/login",
     hidden: true,
     children: [

@@ -42,7 +42,7 @@ module.exports = defineConfig({
     proxy: {
       //配置多个跨域
       "/menu": {
-        target: "http://10.50.0.173:7001",
+        target: "http://127.0.0.1:7001", // 本地服务
         changeOrigin: true,
         // ws: true,//websocket支持
         secure: false,

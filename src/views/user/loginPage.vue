@@ -57,6 +57,9 @@ import initThreejs from "./login";
 
 export default defineComponent({
   setup() {
+    const instance = app();
+    const [actions] = useMethod("user", ["Login"]);
+
     // 表单对象
     const formRef = ref(null);
 
@@ -75,31 +78,17 @@ export default defineComponent({
     };
 
     onMounted(() => {
+      // 初始化three.js背景
       initThreejs();
     });
 
-    // 提交表单
-    const submitForm = (formEl: any | undefined) => {
-      console.log(formEl);
-      if (!formEl) return;
-      formEl.validate((valid: boolean) => {
-        console.log(valid);
-        if (valid) {
-          submitHandle();
-        } else {
-          app().$message.warning("随便输入用户名、密码、验证码即可登陆");
-        }
-      });
-    };
-
     // 登录提交请求
-    const instance = app();
-    const [actions] = useMethod("user", ["Login"]);
     const loginParams = {
       username: "admin",
-      password: "8914de686ab28dc22f30d3d8e107ff6c",
+      password: "8914de686ab28dc22f30d3d8e107ff6c", // 假的密码
     };
-    loginParams.password = md5("admin");
+    loginParams.password = md5("admin"); // 真的密码：admin编码以后得值
+
     const loginSuccess = (res: any) => {
       console.log(instance, "login请求：", res);
       instance.$message.success("欢迎回来");
@@ -129,7 +118,18 @@ export default defineComponent({
           console.log("登录方法执行结束");
         });
     };
-
+    // 登录
+    const submitForm = (formEl: any | undefined) => {
+      // console.log(formEl);
+      if (!formEl) return;
+      formEl.validate((valid: boolean) => {
+        if (valid) {
+          submitHandle();
+        } else {
+          app().$message.warning("随便输入用户名、密码、验证码即可登陆");
+        }
+      });
+    };
     return {
       formRules,
       formField,

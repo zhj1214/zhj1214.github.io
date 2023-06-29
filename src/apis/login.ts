@@ -1,11 +1,3 @@
-/*
- * @Description:
- * @Version: 0.0.1
- * @Autor: zhj1214
- * @Date: 2021-11-29 21:21:08
- * @LastEditors: zhj1214
- * @LastEditTime: 2022-05-12 17:00:16
- */
 import request from "@/utils/http";
 
 const userApi = {
@@ -32,7 +24,7 @@ const userApi = {
  * @param parameter
  * @returns {*}
  */
-export function login(parameter: AnyObject) {
+export function loginRequest(parameter: AnyObject) {
   return request({
     url: userApi.Login,
     method: "post",

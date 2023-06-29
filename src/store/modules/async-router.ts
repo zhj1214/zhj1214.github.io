@@ -1,11 +1,3 @@
-/*
- * @Description:
- * @Version: 0.0.1
- * @Autor: zhj1214
- * @Date: 2021-11-25 21:36:23
- * @LastEditors: zhj1214
- * @LastEditTime: 2022-05-12 20:59:25
- */
 /**
  * 向后端请求用户的菜单，动态生成路由
  */

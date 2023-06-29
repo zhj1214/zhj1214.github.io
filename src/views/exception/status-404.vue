@@ -21,9 +21,9 @@ export default defineComponent({
     const instance = app();
     const backPage = () => {
       if (state && state.addRouters.value[0]) {
-        instance.$router.push({ path: "/dashboard" });
+        instance.$router.push({ path: "/dashboard" }); // 主页
       } else {
-        instance.$router.push({ path: "/user" });
+        instance.$router.push({ path: "/user" }); // 登录页面
       }
     };
     return {

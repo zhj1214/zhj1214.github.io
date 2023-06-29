@@ -1,11 +1,3 @@
-/*
- * @Description:
- * @Version: 0.0.1
- * @Autor: zhj1214
- * @Date: 2021-12-15 16:24:56
- * @LastEditors: zhj1214
- * @LastEditTime: 2022-05-12 16:59:00
- */
 import request from "@/utils/http";
 
 const api = {

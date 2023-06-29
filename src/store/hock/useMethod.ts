@@ -1,12 +1,3 @@
-/*
- * @Description:
- * @Version: 0.0.1
- * @Autor: zhj1214
- * @Date: 2021-11-26 17:53:12
- * @LastEditors: zhj1214
- * @LastEditTime: 2022-05-12 16:22:07
- */
-
 import { mapActions, useStore, mapMutations } from "vuex";
 
 function bindStore(list: any) {

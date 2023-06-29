@@ -1,11 +1,4 @@
-/*
- * @Description:
- * @Version: 0.0.1
- * @Autor: zhj1214
- * @Date: 2021-11-29 13:47:50
- * @LastEditors: zhj1214
- * @LastEditTime: 2022-05-20 17:06:26
- */
+import { markRaw } from "vue";
 import { MENU_KEYS } from "@/utils/constant";
 import local from "store";
 // import * as loginService from "@/apis/login";
@@ -16,9 +9,9 @@ import { BasicLayout, RouteView } from "@/layouts";
 // 前端路由表
 const constantRouterComponents: AnyObject = {
   // 基础页面 layout 必须引入
-  BasicLayout,
+  BasicLayout: markRaw(BasicLayout),
   //   BlankLayout,
-  RouteView,
+  RouteView: markRaw(RouteView),
   // PageView,
   // 403: () => import("@/views/exception/status-403"),
   // 404: () => import("@views/exception/status-404"),
@@ -138,11 +131,11 @@ const listToTree = (list: AnyObject, tree: AnyObject, parentId: any) => {
 
 /**
  * 格式化树形结构数据 生成 vue-router 层级路由表
- *
  * @param routerMap
  * @param parent
  * @returns {*}
  */
+
 export const generator = function (
   routerMap: AnyObject,
   parent?: AnyObject
@@ -198,6 +191,7 @@ export const generator = function (
     return currentRouter;
   });
 };
+
 /**
  * 动态生成菜单
  * @param token

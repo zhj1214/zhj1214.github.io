@@ -4,7 +4,7 @@
  * @Autor: zhj1214
  * @Date: 2021-12-14 11:42:23
  * @LastEditors: zhj1214
- * @LastEditTime: 2022-05-12 17:21:07
+ * @LastEditTime: 2023-06-29 16:33:59
  */
 
 // import { GUI } from "dat.gui";
@@ -220,7 +220,7 @@ const initSphereGroup = () => {
 
 // 初始化流动路径
 const initTubeRoute = (route: any, geometryWidth: any, geometryHeigh: any) => {
-  console.log("route", route);
+  // console.log("初始化流动路径 - route", route);
   const curve = new THREE.CatmullRomCurve3(route);
   const tubeGeometry = new THREE.TubeGeometry(curve, 100, 2, 50);
   const tubeMaterial = new THREE.MeshBasicMaterial({

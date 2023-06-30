@@ -27,12 +27,14 @@ export default {
      * @author: zhj1214
      */
     GenerateRoutes(context: AnyObject, data: AnyObject) {
-      return new Promise<void>((resolve) => {
+      return new Promise<void>((resolve, reject) => {
         const { token } = data;
-        generatorDynamicRouter(token).then((routers) => {
-          context.commit("SET_ROUTERS", routers);
-          resolve();
-        });
+        generatorDynamicRouter(token)
+          .then((routers) => {
+            context.commit("SET_ROUTERS", routers);
+            resolve();
+          })
+          .catch((err) => reject(err));
       });
     },
     /**

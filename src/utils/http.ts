@@ -4,24 +4,6 @@ import { STORAGE } from "@/utils/constant";
 import useMethod from "@/store/hock/useMethod";
 import VueAxios from "./axios";
 import { ElNotification } from "element-plus";
-import { BuildPropType } from "element-plus/lib/utils";
-
-const notificationFn = (
-  message: string,
-  type:
-    | BuildPropType<
-        StringConstructor,
-        "" | "success" | "warning" | "info" | "error",
-        unknown
-      >
-    | undefined = "error"
-) => {
-  ElNotification({
-    title: "Error",
-    message,
-    type,
-  });
-};
 
 // 创建 axios 实例
 const request = axios.create({
@@ -37,13 +19,21 @@ const errorHandler = (error: AnyObject) => {
     // 从 localstorage 获取 token
     const token = localStorage.getItem(STORAGE.TOKEN);
     if (error.response.status === 403) {
-      notificationFn(data.message);
+      ElNotification({
+        title: "",
+        message: data.message,
+        type: "error",
+      });
     }
     if (
       error.response.status === 401 &&
       !(data.result && data.result.isLogin)
     ) {
-      notificationFn("Authorization verification failed");
+      ElNotification({
+        title: "",
+        message: "Authorization verification failed",
+        type: "error",
+      });
       if (token) {
         const [logout] = useMethod(["Logout"]);
         logout().then(() => {
@@ -70,6 +60,25 @@ request.interceptors.request.use((config: AnyObject) => {
 
 // response interceptor
 request.interceptors.response.use((response) => {
+  const { code } = response.data;
+  // 1. 成功
+  if (code === 10000 || code === 200) {
+    return response.data;
+  }
+  // 2. 失败提示
+  if (response.data && response.data.msg) {
+    ElNotification({
+      title: "",
+      message: response.data.msg,
+      type: "error",
+    });
+  } else {
+    console.error("请求失败", response.data);
+  }
+  // 3. 失败code处理
+  // if (code === 401) {
+
+  // }
   return response.data;
 }, errorHandler);
 

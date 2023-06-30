@@ -6,25 +6,32 @@ import { getMenuList } from "@/apis/menu";
 import { BasicLayout, RouteView } from "@/layouts";
 // import { BasicLayout, BlankLayout, PageView, RouteView } from "@/layouts";
 
-// 前端路由表
+/**
+ * @description:  前端路由表
+ * 定义的key：Workplace 这个对应创建菜单的路由Component值
+ *
+ * @author: zhj1214
+ */
 const constantRouterComponents: AnyObject = {
   // 基础页面 layout 必须引入
   BasicLayout: markRaw(BasicLayout),
   //   BlankLayout,
   RouteView: markRaw(RouteView),
   // PageView,
-  // 403: () => import("@/views/exception/status-403"),
-  // 404: () => import("@views/exception/status-404"),
-  // 500: () => import("@views/exception/status-500"),
   // 创建菜单页面
   Menu: () => import("@/views/menuCreate/index.vue"),
-  /**
-   * 列表
-   * */
-  // vue学习
+  /******************** exception ********************/
+  Exception403: () => import("@/views/exception/status-403.vue"),
+  Exception404: () => import("@/views/exception/status-404.vue"),
+  //   Exception500: () => import(/* webpackChunkName: "fail" */ "@/views/exception/500"),
+  /******************** 学习 ********************/
+  // 基础
   bfc: () => import("@/views/learnList/base/bfc.vue"),
+  promise: () => import("@/views/learnList/base/promise.vue"),
   centerview: () => import("@/views/learnList/base/centerView.vue"),
-  //   // 你需要动态引入的页面组件
+  // 组件
+  dyform: () => import("@/views/learnList/base/bfc.vue"),
+  /******************** 仪表盘 ********************/
   Workplace: () => import("@/views/dashboard/Workplace.vue"),
   Analysis: () => import("@/views/dashboard/Analysis.vue"),
   // three.js示例
@@ -38,27 +45,9 @@ const constantRouterComponents: AnyObject = {
   //   BasicForm: () => import("@/views/form/basicForm"),
   //   StepForm: () => import("@/views/form/stepForm/StepForm"),
   //   AdvanceForm: () => import("@/views/form/advancedForm/AdvancedForm"),
-
-  //   // list
-  //   TableList: () => import("@/views/list/TableList"),
-  //   StandardList: () => import("@/views/list/BasicList"),
-  //   CardList: () => import("@/views/list/CardList"),
-  //   SearchLayout: () => import("@/views/list/search/SearchLayout"),
-  //   SearchArticles: () => import("@/views/list/search/Article"),
-  //   SearchProjects: () => import("@/views/list/search/Projects"),
-  //   SearchApplications: () => import("@/views/list/search/Applications"),
-  //   ProfileBasic: () => import("@/views/profile/basic"),
-  //   ProfileAdvanced: () => import("@/views/profile/advanced/Advanced"),
-
   //   // result
   //   ResultSuccess: () => import(/* webpackChunkName: "result" */ "@/views/result/Success"),
   //   ResultFail: () => import(/* webpackChunkName: "result" */ "@/views/result/Error"),
-
-  //   // exception
-  //   Exception403: () => import(/* webpackChunkName: "fail" */ "@/views/exception/403"),
-  Exception404: () => import("@/views/exception/status-404.vue"),
-  //   Exception500: () => import(/* webpackChunkName: "fail" */ "@/views/exception/500"),
-
   //   // account
   //   AccountCenter: () => import("@/views/account/center"),
   //   AccountSettings: () => import("@/views/account/settings/Index"),
@@ -227,7 +216,7 @@ export const generatorDynamicRouter = (token: any) => {
         resolve(generatorDynamicRouterData(result));
       })
       .catch((err: any) => {
-        console.log(err, "---err");
+        console.error("菜单数据获取失败:", err);
         if (process.env.NODE_ENV === "development") {
           result = local.get(MENU_KEYS.DATA) || [
             {

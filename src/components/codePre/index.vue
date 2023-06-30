@@ -1,36 +1,37 @@
-<!--
- * @Description: 
- * @Version: 0.0.1
- * @Autor: zhj1214
- * @Date: 2022-02-17 14:18:23
- * @LastEditors: zhj1214
- * @LastEditTime: 2022-02-18 16:52:49
--->
 <template>
   <div class="copy-code-container">
     <div class="copy-container flex-center">
       <slot name="title"> </slot>
       <div class="flex-center">
-        <n-tooltip trigger="hover">
-          <template #trigger>
-            <div id="copyEvent" style="width: 25px" @click="handleCopy(code)">
-              <n-icon> <CopyOutline /> </n-icon>
-            </div>
-          </template>
-          复制代码
-        </n-tooltip>
-
-        <n-tooltip>
-          <template #trigger>
-            <div style="width: 25px; margin-left: 8px" @click="handeShowCode">
-              <n-icon> <Expand /> </n-icon>
-            </div>
-          </template>
-          显示代码
-        </n-tooltip>
+        <!-- 复制代码 -->
+        <el-tooltip
+          effect="dark"
+          content="Top Left prompts info"
+          placement="top-start"
+        >
+          <el-icon>
+            <CopyOutline />
+          </el-icon>
+          <el-button @click="handleCopy(code)"> 复制代码</el-button>
+        </el-tooltip>
+        <!-- 显示代码 -->
+        <el-tooltip
+          effect="dark"
+          content="Top Left prompts info"
+          placement="top-start"
+        >
+          <el-icon>
+            <Expand />
+          </el-icon>
+          <el-button @click="handeShowCode"> 显示代码</el-button>
+        </el-tooltip>
       </div>
     </div>
-    <div class="code-palce-container" v-if="showCode" :class="{ 'show-code': showCode }">
+    <div
+      class="code-palce-container"
+      v-if="showCode"
+      :class="{ 'show-code': showCode }"
+    >
       <div class="code-box" v-highlight>
         <pre>
             <code class="javascirpt">{{code}}</code>
@@ -41,14 +42,13 @@
 </template>
 
 <script>
-import { NTooltip } from "naive-ui";
 import { ref, defineComponent } from "vue";
 import { Expand, CopyOutline } from "@vicons/ionicons5";
 import clip from "@/utils/clipboard";
 
 export default defineComponent({
   name: "codePre",
-  components: { NTooltip, Expand, CopyOutline },
+  components: { Expand, CopyOutline },
   props: {
     code: {
       type: String,
@@ -61,7 +61,7 @@ export default defineComponent({
     const handeShowCode = () => {
       showCode.value = !showCode.value;
     };
-    const handleCopy = text => {
+    const handleCopy = (text) => {
       //   const copyEvent = ref();
       //   console.log("text", copyEvent);
       clip(text, "#copyEvent");

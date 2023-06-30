@@ -10,6 +10,7 @@
         <el-menu
           default-active="1"
           class="el-menu-vertical-demo"
+          unique-opened
           :collapse="isCollapse"
           @open="handleOpen"
           @close="handleClose"
@@ -64,10 +65,10 @@ export default defineComponent({
      * @author: zhj1214
      */
     const handleOpen = (key: string, keyPath: string[]) => {
-      console.log(key, keyPath);
+      console.log("展开-菜单:", key, keyPath);
     };
     const handleClose = (key: string, keyPath: string[]) => {
-      console.log(key, keyPath);
+      console.log("收起-菜单:", key, keyPath);
     };
     /**
      * @description: 选择了哪个菜单

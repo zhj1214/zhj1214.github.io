@@ -521,6 +521,7 @@ const getmenuData = () => {
     code: 10000,
   };
 };
-
+console.log("Mock对象", Mock);
+getmenuData(); // 为了消除警告⚠️
 // 拦截该url，就可以返回newsList
-Mock.mock("/menu/list", "get", getmenuData());
+// Mock.mock("/menu/list", "get", getmenuData());

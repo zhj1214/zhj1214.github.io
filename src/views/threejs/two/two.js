@@ -1,11 +1,3 @@
-/*
- * @Description:
- * @Version: 0.0.1
- * @Autor: zhj1214
- * @Date: 2022-01-05 13:46:35
- * @LastEditors: zhj1214
- * @LastEditTime: 2022-05-13 14:28:25
- */
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";

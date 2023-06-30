@@ -1,33 +1,58 @@
 <template>
   <div>
-    <div v-for="menu in menus" :key="menu.path">
-      <!-- 没有子项菜单 -->
+    <template v-for="first in menus" :key="first.path">
+      <!-- 一级：没有子项菜单 -->
       <el-menu-item
-        v-if="!menu.children || menu.children.length === 0"
-        :index="menu.path"
+        v-if="!first.children || first.children.length === 0"
+        :index="first.path"
       >
         <el-icon>
-          <component :is="menu.icon" :key="menu.id" />
+          <component :is="first.icon" :key="first.id" />
         </el-icon>
-        <template #title>{{ menu.label }}</template>
+        <template #title>{{ first.label }}</template>
       </el-menu-item>
-      <!-- 有子菜单 -->
-      <el-sub-menu v-else :index="menu.path">
+      <!-- 一级子菜单 -->
+      <el-sub-menu v-else :index="first.path">
+        <!-- 二级：标题插槽 -->
         <template #title>
           <el-icon>
-            <component :is="menu.icon" :key="menu.id" />
+            <component :is="first.icon" :key="first.id" />
           </el-icon>
-          <span v-if="!isCollapsed">{{ menu.label }}</span>
+          <span v-if="!isCollapsed">{{ first.label }}</span>
         </template>
-        <!-- 子菜单 -->
-        <el-menu-item
-          v-for="sub in menu.children"
-          :key="sub.path"
-          :index="sub.path"
-          >{{ sub.label }}</el-menu-item
-        >
+        <!-- 内容 -->
+        <template v-for="second in first.children" :key="second.path">
+          <!-- 二级：子菜单 -->
+          <el-menu-item
+            v-if="!second.children || second.children.length === 0"
+            :index="second.path"
+          >
+            {{ second.label }}
+          </el-menu-item>
+          <!-- 二级：子菜单 -->
+          <el-sub-menu v-else :index="second.path">
+            <template #title>
+              <el-icon>
+                <component :is="second.icon" :key="second.id" />
+              </el-icon>
+              <span v-if="!isCollapsed">{{ second.label }}</span>
+            </template>
+            <!-- 三级：子菜单 -->
+
+            <el-menu-item
+              :teleported="false"
+              v-for="third in second.children"
+              :key="third.path"
+              :index="third.path"
+            >
+              <div class="third-text">
+                {{ third.label }}
+              </div>
+            </el-menu-item>
+          </el-sub-menu>
+        </template>
       </el-sub-menu>
-    </div>
+    </template>
   </div>
 </template>
 
@@ -98,3 +123,11 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="scss" scoped>
+.third-text {
+  @include multi-line-omit(1);
+  display: block !important;
+  padding-left: 25px;
+}
+</style>

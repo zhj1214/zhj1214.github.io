@@ -9,7 +9,7 @@
 <script>
 import { onBeforeUnmount, onMounted, defineComponent } from "vue";
 import { ElConfigProvider } from "element-plus";
-import zhCn from "element-plus/lib/locale/lang/zh-cn";
+import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 import { beforeunloadFn, beforeonunload } from "./utils/closeWindow.ts"; // 关闭窗口提示
 
 export default defineComponent({

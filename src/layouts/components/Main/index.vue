@@ -1,11 +1,3 @@
-<!--
- * @Description: 
- * @Version: 0.0.1
- * @Autor: zhj1214
- * @Date: 2021-11-19 23:42:38
- * @LastEditors: zhj1214
- * @LastEditTime: 2021-12-14 17:44:50
--->
 <template>
   <RouterView>
     <template #default="{ Component, route }">

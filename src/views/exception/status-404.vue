@@ -1,6 +1,9 @@
 <template>
   <div class="view">
     <h1>404</h1>
+    <!-- <h2>
+      {{ $route }}
+    </h2> -->
     <el-button type="primary" @click="backPage"> Back Home </el-button>
   </div>
 </template>

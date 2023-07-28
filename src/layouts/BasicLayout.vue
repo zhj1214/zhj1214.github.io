@@ -102,7 +102,7 @@ export default defineComponent({
     watch(
       () => currentRoute.meta,
       (newVal, oldval) => {
-        console.log(newVal.title, "11111111111", oldval.title);
+        console.log(newVal.title, "--跳转--", oldval.title);
         meta.title = newVal.title;
       }
     );

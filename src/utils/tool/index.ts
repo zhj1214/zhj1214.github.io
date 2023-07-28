@@ -4,7 +4,7 @@
  * @Autor: zhj1214
  * @Date: 2021-09-04 09:53:42
  * @LastEditors: zhj1214
- * @LastEditTime: 2022-05-13 14:00:24
+ * @LastEditTime: 2023-07-28 09:35:33
  */
 let uni: AnyObject;
 let tool = {
@@ -179,7 +179,7 @@ let tool = {
 
   debounce(
     func: any,
-    time = 17,
+    time = 1000,
     options = {
       leading: true,
       context: null,
@@ -190,14 +190,19 @@ let tool = {
       if (timer) {
         clearTimeout(timer);
       }
-      if (options.leading && !timer) {
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        timer = setTimeout(() => {}, time);
-        func.apply(options.context, args);
-      } else {
-        timer = setTimeout(() => {
-          func.apply(options.context, args);
+
+      // -开始是否需要触发一次
+      if (options.leading) {
+        const callNow = !timer;
+        timer = setTimeout(function () {
           timer = null;
+        }, time);
+        if (callNow)
+          typeof func === "function" && func.apply(options.context, args);
+      } else {
+        // 设置定时器，当最后一次操作后，timeout不会再被清除，所以在延时time毫秒后执行func回调方法
+        timer = setTimeout(function () {
+          typeof func === "function" && func.apply(options.context, args);
         }, time);
       }
     };

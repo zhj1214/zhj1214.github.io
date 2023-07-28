@@ -18,8 +18,10 @@ NProgress.configure({ showSpinner: false }); // NProgress Configuration
 const allowList = ["test", "login", "register", "registerResult"]; // no redirect allowList
 const loginRoutePath = "/user/login"; // 登录页面
 
-// 没有网络也可以创建和加载菜单；
-const syncRouter = async () => {
+/**
+ * 没有网络也可以创建和加载菜单
+ * */
+export const syncRouter = async () => {
   return new Promise<void>((resolve) => {
     function add() {
       const arr: any = [];
@@ -103,6 +105,19 @@ const syncRouter = async () => {
     }
   });
 };
+// 获取用户角色信息
+export const getUserRoles = async () => {
+  return store.dispatch("user/GetInfo");
+};
+// 根据角色获取用户菜单列表动态增加路由
+export const getOriginRouters = async (roles: any) => {
+  return store.dispatch("permission/GenerateRoutes", { roles }).then(() => {
+    // 1. 根据roles权限生成可访问的路由表
+    store.state.permission.addRouters.forEach((r: any) => {
+      router.addRoute(r); // 动态添加可访问路由表 VueRouter@3.5.0+ New API
+    });
+  });
+};
 
 router.beforeEach((to: AnyObject, from: AnyObject, next) => {
   NProgress.start(); // start progress bar
@@ -113,29 +128,22 @@ router.beforeEach((to: AnyObject, from: AnyObject, next) => {
   if (storage.getItem(STORAGE.TOKEN)) {
     // check login user.roles is null
     if (store.state.user.roles.length === 0) {
-      // request login userInfo
-      store
-        .dispatch("user/GetInfo")
+      getUserRoles()
         .then((res) => {
           console.info("拿到用户信息", res);
           const roles = res.result && res.result.role;
           syncRouter().then(() => {
             // 根据角色获取用户菜单列表动态增加路由
-            store
-              .dispatch("permission/GenerateRoutes", { roles })
+            getOriginRouters(roles)
               .then(() => {
-                // 1. 根据roles权限生成可访问的路由表
-                store.state.permission.addRouters.forEach((r: any) => {
-                  router.addRoute(r); // 动态添加可访问路由表 VueRouter@3.5.0+ New API
-                });
-                // 2. url链接中有重定向字段 redirect 时，登录自动重定向到该地址
+                // 1. url链接中有重定向字段 redirect 时，登录自动重定向到该地址
                 const redirect = decodeURIComponent(
                   from.query.redirect || to.query.redirect || to.path
                 );
                 if (to.path === redirect) {
                   next({ ...to, replace: true }); // set the replace: true so the navigation will not leave a history record
                 }
-                // 3. 跳转到目的路由
+                // 2. 跳转到目的路由
                 else {
                   console.log(
                     "URL中包含redirect地址：开始重定向页面",
@@ -168,10 +176,6 @@ router.beforeEach((to: AnyObject, from: AnyObject, next) => {
     } else {
       next();
     }
-
-    // else if (to.path !== "/404") {
-    //   next({ path: "/404", query: { redirect: to.fullPath } });
-    // }
   } else if (allowList.includes(to.name)) {
     // 在免登录名单，直接进入
     next();

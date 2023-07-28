@@ -54,6 +54,7 @@ import md5 from "md5";
 import useMethod from "@/store/hock/useMethod";
 import { app } from "@/mixin";
 import initThreejs from "./login";
+import tool from "@/utils/tool";
 
 export default defineComponent({
   setup() {
@@ -90,14 +91,9 @@ export default defineComponent({
     loginParams.password = md5("admin"); // 真的密码：admin编码以后得值
 
     const loginSuccess = (res: any) => {
-      console.log(instance, "login请求：", res);
+      console.log("login请求：", res);
       instance.$message.success("欢迎回来");
       instance.$router.push({ path: "/", query: { redirect: "/dashboard" } });
-      // var appInstance = instance;
-      // 延迟 1 秒显示欢迎信息
-      // setTimeout(() => {
-
-      // }, 1000);
     };
     const requestFailed = (err: any) => {
       console.log("login请求err：", err);
@@ -119,7 +115,7 @@ export default defineComponent({
         });
     };
     // 登录
-    const submitForm = (formEl: any | undefined) => {
+    const submitLogin = (formEl: any | undefined) => {
       // console.log(formEl);
       if (!formEl) return;
       formEl.validate((valid: boolean) => {
@@ -130,6 +126,8 @@ export default defineComponent({
         }
       });
     };
+    const submitForm = tool.debounce(submitLogin, 2000);
+    // const submitForm = submitLogin;
     return {
       formRules,
       formField,
@@ -142,7 +140,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .login-container {
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   position: relative;
   #login-three-container {

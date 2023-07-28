@@ -1,7 +1,7 @@
 // eslint-disable-next-line
 // import HelloWorld from "@/components/HelloWorld.vue";
 import { defineAsyncComponent, markRaw } from "vue";
-import { UserLayout } from "@/layouts";
+import { UserLoginLayout, Entry } from "@/layouts";
 import Vuex from "@/views/vuexView.vue";
 
 const _Axios = defineAsyncComponent(() => import("@/views/axios.vue"));
@@ -22,34 +22,28 @@ export const asyncRouterMap = [];
 
 /**
  * 基础路由
- * @type { *[] }
  */
 export const constantRouterMap = [
   {
     path: "/",
     name: "index",
+    component: markRaw(UserLoginLayout),
     redirect: "/dashboard",
   },
   {
-    path: "/vuex",
-    name: "vuex",
-    component: Vuex,
-  },
-  {
-    path: "/axios",
-    name: "Axios",
-    component: _Axios,
+    path: "/login",
+    name: "loginJump",
+    redirect: "/user",
   },
   {
     path: "/user",
-    component: markRaw(UserLayout),
+    component: markRaw(UserLoginLayout),
     redirect: "/user/login",
     hidden: true,
     children: [
       {
         path: "login",
         name: "login",
-
         component: () => import("@/views/user/loginPage.vue"),
       },
       // {
@@ -70,12 +64,23 @@ export const constantRouterMap = [
     ],
   },
   {
+    path: "/vuex",
+    name: "vuex",
+    component: Vuex,
+  },
+  {
+    path: "/axios",
+    name: "Axios",
+    component: _Axios,
+  },
+  {
     path: "/404",
     name: "404",
     component: () => import("@/views/exception/status-404.vue"),
   },
+  // 上面路由，匹配不到的时候进入
   {
     path: "/:pathMatch(.*)",
-    redirect: "/404",
+    component: markRaw(Entry),
   },
 ];

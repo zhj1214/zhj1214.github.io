@@ -186,7 +186,7 @@ export const generator = function (
  * @param token
  * @returns {Promise<Router>}
  */
-const generatorDynamicRouterData = (result: AnyObject) => {
+export const generatorDynamicRouterData = (result: AnyObject) => {
   const menuNav = [];
   const childrenNav: AnyObject = [];
   //      后端数据, 根级树数组,  根级 PID

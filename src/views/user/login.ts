@@ -1,12 +1,3 @@
-/*
- * @Description:
- * @Version: 0.0.1
- * @Autor: zhj1214
- * @Date: 2021-12-14 11:42:23
- * @LastEditors: zhj1214
- * @LastEditTime: 2023-06-29 16:33:59
- */
-
 // import { GUI } from "dat.gui";
 import * as THREE from "three";
 import _ from "lodash";
@@ -71,8 +62,10 @@ let renderer: any;
 
 export default function () {
   container = document.getElementById("login-three-container");
-  width = container.clientWidth;
-  height = container.clientHeight;
+  width = window.screen.width || container.clientWidth; // 窗口宽度
+  height = container.clientHeight; // 容器高度
+  // console.log(width, "--", container, "--", height);
+
   initScene();
   initSceneBg();
   initCamera();

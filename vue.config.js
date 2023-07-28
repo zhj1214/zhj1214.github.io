@@ -12,7 +12,7 @@ module.exports = defineConfig({
       sass: {
         // 1. 必须写在UI组件之前，避免以避免 sass 混合变量的问题（官方）https://element-plus.org/zh-CN/guide/theming.html#%E5%A6%82%E4%BD%95%E8%A6%86%E7%9B%96%E5%AE%83%EF%BC%9F
         // 2。加载mixin的样式
-        additionalData: `@use "./src/styles/element/index.scss" as *;`, 
+        additionalData: `@use "./src/styles/element/index.scss" as *;`,
       },
     },
   },
@@ -32,12 +32,11 @@ module.exports = defineConfig({
     }
     config.plugins = [...config.plugins, ...plugins];
   },
-
   chainWebpack: (config) => {
     // 添加别名 这里没生效
     config.resolve.alias
-      .set("@", resolve("src"))
-      .set("@utils", resolve("src/utils"))
+      // .set("@", resolve("src"))
+      .set("utils", resolve("src/utils"))
       .set("@assets", resolve("src/assets"))
       .set("@style", resolve("src/style"))
       .set("@components", resolve("src/components"))

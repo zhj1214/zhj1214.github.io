@@ -4,7 +4,7 @@
  * @Autor: zhj1214
  * @Date: 2023-07-28 15:39:16
  * @LastEditors: zhj1214
- * @LastEditTime: 2023-07-28 15:44:59
+ * @LastEditTime: 2023-07-28 16:48:00
  */
 import Mock from "mockjs";
 import { builder } from "../util";
@@ -34,6 +34,6 @@ Mock.mock("/mock/random/news", "get", produceNewsData());
 
 // sptable 模拟数据
 const demoSptable = () => {
-  return mockdata.data;
+  return builder(mockdata.data.data, "", 200);
 };
-Mock.mock("/demo/sptable", "post", demoSptable());
+Mock.mock(/\/demo\/sptable/, "post", demoSptable);

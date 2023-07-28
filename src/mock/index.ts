@@ -21,6 +21,7 @@ export default (async () => {
   await import("./services/other");
   await import("./services/tagCloud");
   await import("./services/article");
+  await import("./services/cus-component-mock");
   Mock.setup({
     timeout: 800, // setter delay time
   });

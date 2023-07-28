@@ -1,38 +1,50 @@
 <template>
-  <div id="nav" class="view">
-    <div class="left">
-      <!-- 菜单开关 -->
-      <el-radio-group v-model="isCollapse" style="margin-bottom: 20px">
-        <el-radio-button :label="true">收起</el-radio-button>
-        <el-radio-button :label="false">展开</el-radio-button>
-      </el-radio-group>
-      <div style="width: 100%">
-        <el-menu
-          default-active="1"
-          class="el-menu-vertical-demo"
-          unique-opened
-          :collapse="isCollapse"
-          @open="handleOpen"
-          @close="handleClose"
-          @select="selectMenu"
-        >
-          <AsideMenu :collapsed="isCollapse" />
-        </el-menu>
-      </div>
-    </div>
+  <div class="view">
+    <el-container>
+      <el-aside style="width: auto">
+        <div class="left">
+          <!-- 菜单开关 -->
+          <el-radio-group v-model="isCollapse" style="margin-bottom: 20px">
+            <el-radio-button :label="true">收起</el-radio-button>
+            <el-radio-button :label="false">展开</el-radio-button>
+          </el-radio-group>
+          <div style="width: 100%">
+            <el-menu
+              default-active="1"
+              class="el-menu-vertical-demo"
+              unique-opened
+              :collapse="isCollapse"
+              @open="handleOpen"
+              @close="handleClose"
+              @select="selectMenu"
+            >
+              <AsideMenu :collapsed="isCollapse" />
+            </el-menu>
+          </div>
+        </div>
+      </el-aside>
+      <el-container class="right">
+        <el-header>
+          <div class="header">
+            <div class="title">{{ meta.title }}</div>
+          </div>
+        </el-header>
+        <el-main>
+          <!-- 主应用渲染区，用于挂载主应用路由触发的组件 -->
+          <div class="contentView" v-show="$route.name">
+            <MainView></MainView>
+          </div>
+          <!-- 子应用渲染区，用于挂载子应用节点 -->
+          <div class="contentView" v-show="!$route.name" id="contentapp"></div>
+        </el-main>
+        <!-- <el-footer>
+          <div class="footer">备案号信息</div>
+        </el-footer> -->
+      </el-container>
+    </el-container>
+
     <!-- 右边内容 -->
-    <div class="right">
-      <div class="header">
-        <div class="title">{{ meta.title }}</div>
-      </div>
-      <!-- 主应用渲染区，用于挂载主应用路由触发的组件 -->
-      <div class="contentView" v-show="$route.name">
-        <MainView></MainView>
-      </div>
-      <!-- 子应用渲染区，用于挂载子应用节点 -->
-      <div class="contentView" v-show="!$route.name" id="contentapp"></div>
-      <!-- <div class="footer">备案号信息</div> -->
-    </div>
+    <!-- <div></div> -->
   </div>
 </template>
 <script lang="ts">
@@ -121,6 +133,7 @@ export default defineComponent({
 <style scoped lang="scss">
 .view {
   display: flex;
+  // width: 100vw;
   height: 100vh;
   .left {
     display: flex;
@@ -140,15 +153,19 @@ export default defineComponent({
   }
   .right {
     // width: calc(100vw - v-bind("contentW"));
+    // width: calc(100% - 185px);
     width: 100%;
+    max-width: 100%;
     height: 100vh;
     .header {
       height: 64px;
       box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
       transition: all 0.2s ease-in-out;
       width: 100%;
-      padding: 0 24px;
+      // box-sizing: border-box;
+
       .title {
+        padding: 0 24px;
         font-size: 22px;
         font-weight: 900;
         line-height: 64px;
@@ -166,5 +183,19 @@ export default defineComponent({
       width: 100%;
     }
   }
+}
+</style>
+<style>
+body {
+  margin: 0;
+}
+/* 使用class = contentView 隐藏滚动条 */
+.contentView::-webkit-scrollbar {
+  width: 0;
+}
+
+.hideScrollBar {
+  -ms-overflow-style: none;
+  overflow: -moz-scrollbars-none;
 }
 </style>

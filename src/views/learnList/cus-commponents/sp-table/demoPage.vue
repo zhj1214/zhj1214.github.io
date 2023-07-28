@@ -18,6 +18,7 @@
       :columns="columns"
       :paginationSeting="paginationSeting"
       style="width: 100%"
+      max-height="450"
       stripe
       @done="(val) => (tableInstance = val)"
     >
@@ -70,7 +71,8 @@
 </template>
 
 <script>
-import SpTable from "../searchpannel/index";
+import SpTable from "./components/s-table";
+import SpSearchPanel from "../searchpannel/index";
 import tool from "@/utils/tool";
 import { getSpTableMOck } from "@/apis/cus-component";
 
@@ -78,6 +80,7 @@ export default {
   name: "ecologyCategory",
   components: {
     SpTable,
+    SpSearchPanel,
   },
   props: {
     paramTemp: {
@@ -107,6 +110,7 @@ export default {
       tableData: [],
       columns: [
         {
+          fixed: true,
           prop: "rightsCode",
           label: "权益编码",
           align: "center",
@@ -224,24 +228,21 @@ export default {
   },
   created() {
     // 1. 获取权益类型数据
-    this.$api.rights
-      .getTypeLists({ pageNo: 0, pageSize: 999, jumpType: 1 })
-      .then((res) => {
-        this.ecologyType = res.map((item) => {
-          item.text = item.rightsTypeName;
-          item.value = item.id;
-          return item;
-        });
-      });
+    this.ecologyType = [
+      {
+        text: "类型 1",
+        value: 1,
+      },
+      {
+        text: "类型 2",
+        value: 2,
+      },
+    ];
+
     // 2. 没有筛选条件的时候，空参数，获取列表数据
     if (!this.paramTemp.id) {
       this.getList();
     }
-  },
-  mounted() {
-    this.$EventBus.$on("news-ecologyrights-list", () => {
-      this.getList();
-    });
   },
   methods: {
     // 删除权益
@@ -331,6 +332,8 @@ export default {
       this.loading = true;
       getSpTableMOck(params)
         .then((res) => {
+          console.log("res--", res);
+
           this.tableData = res.data.map((item) => {
             return item;
           });
@@ -353,9 +356,6 @@ export default {
       this.getList();
       console.log("跳转页码", val);
     },
-  },
-  beforeUnmount() {
-    this.$EventBus.$off("news-ecologyrights-list");
   },
 };
 </script>

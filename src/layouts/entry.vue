@@ -4,7 +4,7 @@
  * @Autor: zhj1214
  * @Date: 2023-07-28 10:26:03
  * @LastEditors: zhj1214
- * @LastEditTime: 2023-07-28 16:25:38
+ * @LastEditTime: 2023-07-28 17:41:52
 -->
 <template>
   <div class="entry">
@@ -57,6 +57,12 @@ if (token) {
                 second.children.forEach((third: any) => {
                   if (third.path === path) {
                     isSame = true;
+                  } else if (third.children && third.children.length > 0) {
+                    third.children.forEach((fourth: any) => {
+                      if (fourth.path === path) {
+                        isSame = true;
+                      }
+                    });
                   }
                 });
               }

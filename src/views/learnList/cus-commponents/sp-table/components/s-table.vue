@@ -6,7 +6,7 @@
         <el-table-column v-if="!col.scopedSlot" v-bind="col" :key="index">
         </el-table-column>
         <el-table-column v-else :key="col.prop" v-bind="col">
-          <template v-slot:header="scope">
+          <template #header="scope">
             <slot
               v-if="col.isSlotHeader"
               :name="`${col.scopedSlot}Header`"
@@ -15,7 +15,7 @@
             </slot>
             <div v-else>{{ scope.column.label }}</div>
           </template>
-          <template #scope="scope">
+          <template #default="scope">
             <slot :name="col.scopedSlot" v-bind="{ col: col, row: scope.row }">
             </slot>
           </template>

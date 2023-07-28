@@ -30,7 +30,7 @@ const constantRouterComponents: AnyObject = {
   promise: () => import("@/views/learnList/base/promise.vue"),
   centerview: () => import("@/views/learnList/base/centerView.vue"),
   // 组件
-  dyform: () => import("@/views/learnList/base/bfc.vue"),
+  dyform: () => import("@/views/learnList/cus-commponents/dyform/demoPage.vue"),
   spTable: () => import("@/views/learnList/cus-commponents/sp-table/demoPage.vue"),
   /******************** 仪表盘 ********************/
   Workplace: () => import("@/views/dashboard/Workplace.vue"),

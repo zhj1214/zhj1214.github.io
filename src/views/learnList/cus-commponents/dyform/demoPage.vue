@@ -1,7 +1,8 @@
 <template>
   <div class="module">
+    没有兼容 vue3
     <!-- 条件筛选 -->
-    <div>
+    <div v-if="false">
       <template v-if="formData.componentsList.length > 0">
         <DyForm
           class="customView"
@@ -133,7 +134,7 @@ export default {
     },
   },
   created() {
-    this.init();
+    // this.init();
   },
   methods: {
     /**
@@ -141,33 +142,11 @@ export default {
      */
     init() {
       // 1. 获取筛选条件
-      this.$api
-        .getFilterInfo()
-        .then((res) => {
-          console.log(res.conditions, "获取筛选项res:", res);
-
-          // 1.1 有配置
-          if (res.conditions) {
-            const arr = this.getComponentsData(res.conditions);
-            this.updateSeting(arr, true);
-          } else {
-            // 1.2 无筛选条件则使用默认的
-            const ids = formDataPreset.map((e) => {
-              return e.id;
-            });
-            this.getComponentsData(ids);
-            this.formData.componentsList = formDataPreset;
-          }
-        })
-        .catch(() => {
-          // 请求失败也展示默认的
-          const ids = formDataPreset.map((e) => {
-            return e.id;
-          });
-          this.getComponentsData(ids);
-          this.formData.componentsList = formDataPreset;
-        });
-
+      const ids = formDataPreset.map((e) => {
+        return e.id;
+      });
+      this.getComponentsData(ids);
+      this.formData.componentsList = formDataPreset;
       // 2. 获取没有筛选条件的列表数据
       this.getClueListRequest({});
     },
@@ -347,19 +326,19 @@ export default {
       }
 
       if (request) {
-        this.$api[request]().then((res) => {
-          console.log("接口：", request, "-数据：", res);
-          this.formData.componentsList.forEach((e, idx) => {
-            if (e.id === type) {
-              if (isProps) {
-                e.componentsProps.options = res;
-              } else {
-                e.data.selectList = res;
-                this.$ebs.emit(`${e.type}-${idx}-`, e);
-              }
+        // this.$api[request]().then((res) => {
+        // console.log("接口：", request, "-数据：", res);
+        this.formData.componentsList.forEach((e, idx) => {
+          if (e.id === type) {
+            if (isProps) {
+              e.componentsProps.options = [];
+            } else {
+              e.data.selectList = [];
+              this.$ebs.emit(`${e.type}-${idx}-`, e);
             }
-          });
+          }
         });
+        // });
       }
     },
     /**
@@ -377,25 +356,11 @@ export default {
      * @description: 获取列表数据
      */
     getClueListRequest(param) {
-      this.$api
-        .getClueList({
-          pageNo: this.currentPage,
-          pageSize: this.pageSize,
-          ...param,
-        })
-        .then((res) => {
-          console.log("原始列表数据res:", res);
-          // 1. 重置-搜索参数-状态
-          this.isChangeSearchParam = false;
-          // 2. 赋值数据源
-          this.pageTotal = res.total || 0;
-          this.tableData =
-            res.data.map((e) => {
-              e.createTime = moment(e.createTime).format("YYYY-MM-DD HH:mm:ss");
-              e.applyTime = moment(e.applyTime).format("YYYY-MM-DD HH:mm:ss");
-              return e;
-            }) || [];
-        });
+      // 1. 重置-搜索参数-状态
+      this.isChangeSearchParam = false;
+      // 2. 赋值数据源
+      this.pageTotal = 0;
+      this.tableData = [];
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);

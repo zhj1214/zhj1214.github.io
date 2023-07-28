@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2022-01-17 14:46:46
- * @LastEditTime: 2022-05-12 17:09:59
+ * @LastEditTime: 2023-07-28 17:51:01
  * @LastEditors: zhj1214
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \vue3-three.js\src\views\threejs\share-ykg\one\index.vue
@@ -232,8 +232,8 @@ export default defineComponent({
 
 <style scoped>
 .stage {
-  position: absolute;
+  /* position: absolute;
   top: 0;
-  left: 0;
+  left: 0; */
 }
 </style>

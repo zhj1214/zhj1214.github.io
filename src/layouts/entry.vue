@@ -4,7 +4,7 @@
  * @Autor: zhj1214
  * @Date: 2023-07-28 10:26:03
  * @LastEditors: zhj1214
- * @LastEditTime: 2023-07-28 17:41:52
+ * @LastEditTime: 2023-07-28 17:43:20
 -->
 <template>
   <div class="entry">
@@ -43,7 +43,7 @@ if (token) {
     // 1.2 获取菜单数据
     getMenuList(token)
       .then((res: any) => {
-        console.log("服务端返回菜单原始数据response:", res);
+        // console.log("服务端返回菜单原始数据response:", res);
         const routes = generatorDynamicRouterData(res.data);
         let isSame = false;
         routes.forEach((first: any) => {

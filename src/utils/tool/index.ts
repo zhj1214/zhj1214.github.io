@@ -4,7 +4,7 @@
  * @Autor: zhj1214
  * @Date: 2021-09-04 09:53:42
  * @LastEditors: zhj1214
- * @LastEditTime: 2023-07-28 09:35:33
+ * @LastEditTime: 2023-07-28 15:30:39
  */
 let uni: AnyObject;
 let tool = {
@@ -226,6 +226,19 @@ let tool = {
     const compare = (s: any) => bw.indexOf(s) >= 0;
     const ie11 = (() => "ActiveXObject" in window)();
     return compare("MSIE") || ie11;
+  },
+  // 判断 string array object 是不是为空
+  isEmpty(val: any) {
+    const isString = Object.prototype.toString.call(val) === `[object String]`;
+    const isArray = Object.prototype.toString.call(val) === `[object Array]`;
+    const isObject = Object.prototype.toString.call(val) === `[object Object]`;
+    return (
+      (isString && val.trim() === "") ||
+      val === undefined ||
+      val === null ||
+      (isArray && val.length === 0) ||
+      (isObject && Object.keys(val).length === 0)
+    );
   },
 };
 

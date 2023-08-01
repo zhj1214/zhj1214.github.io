@@ -4,14 +4,16 @@
  * @Autor: zhj1214
  * @Date: 2021-12-03 09:06:29
  * @LastEditors: zhj1214
- * @LastEditTime: 2022-05-16 17:09:45
+ * @LastEditTime: 2023-07-28 18:00:12
 -->
 <template>
-  <div class="view flex-center">
-    <div class="imgView" v-for="(item, index) in imgList" :key="index">
-      <img class="avatar" v-lazy="item.pic" />
+  <el-card>
+    <div class="view flex-center">
+      <div class="imgView" v-for="(item, index) in imgList" :key="index">
+        <img class="avatar" v-lazy="item.pic" />
+      </div>
     </div>
-  </div>
+  </el-card>
 </template>
 
 <script>
@@ -56,9 +58,11 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .view {
+  display: flex;
   flex-wrap: wrap;
   .imgView {
-    width: 30%;
+    display: block;
+    width: calc((100% - 100px) / 3);
     margin: 10px 16px;
     .avatar {
       width: 100%;

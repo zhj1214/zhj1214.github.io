@@ -112,7 +112,7 @@ export default defineComponent({
     }
 
     .code-box {
-      ::v-deep .hljs {
+      :deep(.hljs) {
         padding: 0 20px;
         line-height: 25px;
       }

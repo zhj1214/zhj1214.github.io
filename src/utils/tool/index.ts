@@ -4,7 +4,7 @@
  * @Autor: zhj1214
  * @Date: 2021-09-04 09:53:42
  * @LastEditors: zhj1214
- * @LastEditTime: 2023-07-28 15:30:39
+ * @LastEditTime: 2023-08-01 13:58:02
  */
 let uni: AnyObject;
 let tool = {
@@ -243,13 +243,14 @@ let tool = {
 };
 
 // 遍历出每个组件的路径
-const requireTool = require.context("../tool", false, /\.js$/); // webpack
+const requireTool = require.context("@/utils/tool/", false, /\.ts$/); // webpack
 requireTool.keys().forEach((path: string) => {
   const jsInstance = requireTool(path);
   if (!path.includes("index")) {
     tool = { ...tool, ...jsInstance.default };
   }
 });
+
 // const requireTool = import.meta.globEager("../tool/*.js"); // vite
 // for (const key in requireTool) {
 //   if (Object.prototype.hasOwnProperty.call(requireTool, key)) {

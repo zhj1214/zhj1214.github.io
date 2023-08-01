@@ -4,8 +4,10 @@
  * @Autor: zhj1214
  * @Date: 2021-09-04 09:36:40
  * @LastEditors: zhj1214
- * @LastEditTime: 2022-05-13 13:38:43
+ * @LastEditTime: 2023-08-01 14:04:46
  */
+import "../base/date";
+
 export default {
   /**
    * @description 时间戳转时间
@@ -13,8 +15,11 @@ export default {
    * @param date   时间戳 默认当前时间
    * @example (new Date()).Format("YYYY-MM-DD HH:mm:ss.S")
    * */
-  getTimeFormat(format: string, date: any) {
-    const time = date || new Date();
+  getTimeFormat(date: any, format = "YYYY-MM-DD HH:mm:ss.S") {
+    const time =
+      Object.prototype.toString.call(date) === "[object Date]"
+        ? date
+        : new Date();
     return time.Format(format);
   },
   /**

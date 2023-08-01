@@ -108,7 +108,7 @@
   </div>
 </template>
 <script>
-import DyForm from "../dyform-commponent/index.vue";
+import DyForm from "@/components/dy-form/index.vue";
 import { addClueFormPreset } from "../static-data";
 import _ from "lodash";
 

@@ -34,7 +34,7 @@ const constantRouterComponents: AnyObject = {
   spTable: () => import("@/views/learnList/cus-commponents/sp-table/demoPage.vue"),
   /******************** 仪表盘 ********************/
   Workplace: () => import("@/views/dashboard/Workplace.vue"),
-  Analysis: () => import("@/views/dashboard/Analysis.vue"),
+  Analysis: () => import("@/views/dashboard/log-Analysis.vue"),
   // three.js示例
   touching: () => import("@/views/threejs/one/touching.vue"),
   two: () => import("@/views/threejs/two/index.vue"),

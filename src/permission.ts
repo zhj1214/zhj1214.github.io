@@ -6,7 +6,6 @@ import NProgress from "nprogress"; // progress bar
 import "@/components/NProgress/nprogress.scss"; // progress bar custom style
 import { ElNotification } from "element-plus";
 import { localStorage } from "@/utils/localStorage";
-// import { setDocumentTitle, domTitle } from "@utils/domUtil";
 import { STORAGE, MENU_KEYS } from "@/utils/constant";
 import store from "@/store/index";
 import router from "./router";
@@ -123,7 +122,6 @@ router.beforeEach((to: AnyObject, from: AnyObject, next) => {
   NProgress.start(); // start progress bar
   console.log("to:", to);
   console.log("from:", from);
-  // to.meta && typeof to.meta.title !== "undefined" && setDocumentTitle(`${i18nRender(to.meta.title)} - ${domTitle}`);
   /* has token */
   if (storage.getItem(STORAGE.TOKEN)) {
     // check login user.roles is null

@@ -1132,6 +1132,73 @@
   resolved "https://registry.npmmirror.com/@soda/get-current-script/-/get-current-script-1.0.2.tgz#a53515db25d8038374381b73af20bb4f2e508d87"
   integrity sha512-T7VNNlYVM1SgQ+VsMYhnDkcGmWhQdL0bDyGm5TlQ3GBXnJscEClUUOKduWTmm2zCnvNLC1hc3JpuXjs/nFOc5w==
 
+"@supaur/qdjk-browser@^0.0.x":
+  version "0.0.4"
+  resolved "http://npm.supaur.top/@supaur%2fqdjk-browser/-/qdjk-browser-0.0.4.tgz#78dd93b196464ebfba65476918ee9af99b509d5b"
+  integrity sha512-IWG6BfGbHjV8za4sE7dnqOBMq5BTAjAqprGYpPFDLJ79ne9fQ2cUiczNq/XFiy0Uf6kmRZ8LgxHzzyZpQ3v0YA==
+  dependencies:
+    "@supaur/qdjk-core" "^0.0.4"
+    "@supaur/qdjk-shared" "^0.0.x"
+    "@supaur/qdjk-types" "^0.0.x"
+    "@supaur/qdjk-utils" "^0.0.x"
+
+"@supaur/qdjk-core@^0.0.4":
+  version "0.0.4"
+  resolved "http://npm.supaur.top/@supaur%2fqdjk-core/-/qdjk-core-0.0.4.tgz#8d0d5c94685a80315ad1bcff6dfddf093607ea9c"
+  integrity sha512-Zn64TR55WHzfJwUnrLbTggKfd7YsNUT4RYRWXjcItoftOnYL1DLz/1n/YAj6cYVzGhX8J6i5nHn5Lvj3K2qrng==
+  dependencies:
+    "@supaur/qdjk-shared" "^0.0.x"
+    "@supaur/qdjk-types" "^0.0.x"
+    "@supaur/qdjk-utils" "^0.0.x"
+
+"@supaur/qdjk-react@^0.0.x":
+  version "0.0.4"
+  resolved "http://npm.supaur.top/@supaur%2fqdjk-react/-/qdjk-react-0.0.4.tgz#fccd1efac136862b01e00b6f40cda400827f77ec"
+  integrity sha512-J41UAupyp/yJzZ0TOx+dsaSLgKpHiLYe+PUywl9qASAbvagRcyxYoB3LYjCRWShmJ7FoJONqlwBW3Qi5wHI3JA==
+  dependencies:
+    "@supaur/qdjk-core" "^0.0.4"
+    "@supaur/qdjk-shared" "^0.0.x"
+    "@supaur/qdjk-utils" "^0.0.x"
+
+"@supaur/qdjk-shared@^0.0.3", "@supaur/qdjk-shared@^0.0.x":
+  version "0.0.3"
+  resolved "http://npm.supaur.top/@supaur%2fqdjk-shared/-/qdjk-shared-0.0.3.tgz#517b4629f8bb4e0b2c5d1fd3bf57f23691ea4916"
+  integrity sha512-NWhNGZI+AO11P7jQ+ecPkZve4w3n/xlnCQj1XG4gYRw9lh7Aa/3P2Y53ONnhAGKFqGix1Wu28OrLw8nED0RkJw==
+
+"@supaur/qdjk-types@^0.0.x":
+  version "0.0.3"
+  resolved "http://npm.supaur.top/@supaur%2fqdjk-types/-/qdjk-types-0.0.3.tgz#9f71b612e27ad1e210b29dd44fc5ff2c89f53c0f"
+  integrity sha512-E7CaOOxf29kUwAiGJ/nPysBO2+U8SWYwG/L/RePXTOnMxovKzJXQmXhIMiZzfmzG2nImzgtl27FehAvCY6Ukug==
+  dependencies:
+    "@supaur/qdjk-shared" "^0.0.3"
+
+"@supaur/qdjk-utils@^0.0.x":
+  version "0.0.4"
+  resolved "http://npm.supaur.top/@supaur%2fqdjk-utils/-/qdjk-utils-0.0.4.tgz#bcfc6c6e81bb1fa8de9962fbe8f8348e8c315a88"
+  integrity sha512-17aghWW16nHkzV1UGAKkPkqO5oIwxx/ULFgd8M0tAx2eYOcLRX4RMgHOs/mENzdS98QugAhLD9LgjmMFhDQ4mg==
+  dependencies:
+    "@supaur/qdjk-shared" "^0.0.x"
+    "@supaur/qdjk-types" "^0.0.x"
+
+"@supaur/qdjk-vue@^0.0.4":
+  version "0.0.4"
+  resolved "http://npm.supaur.top/@supaur%2fqdjk-vue/-/qdjk-vue-0.0.4.tgz#8f2b1699329e9b1a5e7ae507583128b76efd87b5"
+  integrity sha512-iqE82JsV0E16WrE/6tPn2gaBPx4gNTZEgETbxyyWlLX0lJyzM9FR9pyvGvoRHDDZL8RFX+tOfaXcYgV1rNMk/A==
+  dependencies:
+    "@supaur/qdjk-core" "^0.0.4"
+    "@supaur/qdjk-shared" "^0.0.x"
+    "@supaur/qdjk-types" "^0.0.x"
+    "@supaur/qdjk-utils" "^0.0.x"
+
+"@supaur/qdjk-web@^0.0.5":
+  version "0.0.5"
+  resolved "http://npm.supaur.top/@supaur%2fqdjk-web/-/qdjk-web-0.0.5.tgz#ae4be2de38f18acd66b2abd97b14f51e88874532"
+  integrity sha512-9wvNQU1fKqcLkobXl75QveGAkKj0Wl0npjLo9MOh7c+UEUAeKWdw+ssdFE6qKS9z8SSXarURiJG0lytErOlrDw==
+  dependencies:
+    "@supaur/qdjk-browser" "^0.0.x"
+    "@supaur/qdjk-react" "^0.0.x"
+    "@supaur/qdjk-vue" "^0.0.4"
+
 "@trysound/sax@0.2.0":
   version "0.2.0"
   resolved "https://registry.npmmirror.com/@trysound/sax/-/sax-0.2.0.tgz#cccaab758af56761eb7bf37af6f03f326dd798ad"

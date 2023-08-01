@@ -4,7 +4,7 @@
  * @Autor: zhj1214
  * @Date: 2023-07-28 15:39:16
  * @LastEditors: zhj1214
- * @LastEditTime: 2023-07-28 16:48:00
+ * @LastEditTime: 2023-07-31 10:07:01
  */
 import Mock from "mockjs";
 import { builder } from "../util";
@@ -14,7 +14,7 @@ import mockdata from "../json-db/tabb-data.json";
 const { Random } = Mock;
 // mock新闻数据，包括新闻标题title、内容content、创建时间createdTime
 const produceNewsData = () => {
-  const newsList = [];
+  const newsList: any = [];
   for (let i = 0; i < 20; i++) {
     const newNewsObject = {
       //  Random.ctitle( min, max) 随机产生一个中文标题，长度默认在3-7之间

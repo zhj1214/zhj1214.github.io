@@ -6,7 +6,7 @@ const totalCount = 5701;
 const serverList = (options: AnyObject) => {
   const parameters = getQueryParameters(options);
 
-  const result = [];
+  const result: any = [];
   const pageNo = parseInt(parameters.pageNo);
   const pageSize = parseInt(parameters.pageSize);
   const totalPage = Math.ceil(totalCount / pageSize);

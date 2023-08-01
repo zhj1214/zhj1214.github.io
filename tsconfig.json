@@ -1,7 +1,10 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
+    "target": "esnext", // 目标语言的版本
+    "module": "esnext", // 指定生成代码的模板标准
+    "noImplicitAny": true, // 不允许隐式的 any 类型
+    "removeComments": true, // 删除注释 
+    "preserveConstEnums": true, // 保留 const 和 enum 声明
     "strict": true,
     "jsx": "preserve",
     "moduleResolution": "node",
@@ -11,13 +14,15 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "useDefineForClassFields": true,
-    "sourceMap": true,
+    "sourceMap": true, // 生成目标文件的sourceMap文件
     "baseUrl": ".",
     "types": [
       "webpack-env",
       "element-plus/global",
       "element-plus/lib/utils",
       "@types/mockjs/index",
+      "@/types/*",
+      "src/types/qdjk-web.d.ts",
       "src/types"
     ],
     "paths": {
@@ -32,6 +37,7 @@
       "scripthost"
     ]
   },
+  // "files": [], // 指定待编译文件(入口文件) "./src/index.ts"  
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",

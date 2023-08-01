@@ -41,7 +41,7 @@ const article = (options: AnyObject) => {
   if (queryParameters && !queryParameters.count) {
     queryParameters.count = 5;
   }
-  const data = [];
+  const data: any = [];
   for (let i = 0; i < queryParameters.count; i++) {
     const tmpKey = i + 1;
     const num = parseInt(`${Math.random() * (4 + 1)}`, 10);

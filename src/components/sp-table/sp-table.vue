@@ -104,10 +104,8 @@ export default {
   justify-content: flex-end;
 }
 // 总页码在左侧
-// ::v-deep {
-//   .el-pagination__total {
-//     position: absolute !important;
-//     left: 0 !important;
-//   }
+// :deep(.el-pagination__total) {
+//   position: absolute !important;
+//   left: 0 !important;
 // }
 </style>

@@ -87,12 +87,12 @@
 
 <script>
 import { columns, formDataPreset, filterStaticData } from "./static-data.js";
-import { componentsPreset } from "./dyform-commponent/components.js";
+import { componentsPreset } from "@/components/dy-form/components.js";
 import _ from "lodash";
 import FilterView from "./filter-seting/index";
 import AddClueView from "./add-clue-origin/index";
 // import ImportFile from "../components/Importi-file/index.vue";
-import DyForm from "./dyform-commponent/index";
+import DyForm from "@/components/dy-form/index";
 import moment from "moment";
 
 export default {

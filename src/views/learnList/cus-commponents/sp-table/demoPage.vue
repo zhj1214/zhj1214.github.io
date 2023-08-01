@@ -71,8 +71,8 @@
 </template>
 
 <script>
-import SpTable from "./components/s-table";
-import SpSearchPanel from "../searchpannel/index";
+import SpTable from "@/components/sp-table/sp-table.vue";
+import SpSearchPanel from "@/components/searchpannel/index";
 import tool from "@/utils/tool";
 import { getSpTableMOck } from "@/apis/cus-component";
 
@@ -284,12 +284,7 @@ export default {
     },
     // 新增权益
     handleClickAdd() {
-      this.$router.push({
-        path: "/news/ecologyrights/add",
-        query: {
-          type: "add",
-        },
-      });
+      console.log("aaaaaa-报错", this.a.a);
     },
     // 上、下架
     isGrounding(isTop, val) {

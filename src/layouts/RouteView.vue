@@ -27,7 +27,7 @@ export default defineComponent({
   },
   setup(props) {
     const insetance = app();
-    console.log(insetance.$router.currentRoute.value, "insetance.$router");
+    // console.log(insetance.$router.currentRoute.value, "insetance.$router");
     let { meta } = insetance.$router.currentRoute.value;
     // eslint-disable-next-line no-prototype-builtins
     if (!meta.hasOwnProperty("keepAlive")) {

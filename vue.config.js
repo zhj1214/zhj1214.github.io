@@ -59,6 +59,15 @@ module.exports = defineConfig({
           "^/menu": "/menu",
         },
       },
+      "/errors": {
+        target: "http://localhost:7001", // 本地服务
+        changeOrigin: true,
+        // ws: true,//websocket支持
+        secure: false,
+        pathRewrite: {
+          "^/errors": "/errors",
+        },
+      },
     },
   },
 });

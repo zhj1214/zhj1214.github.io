@@ -4,7 +4,7 @@
  * @Autor: zhj1214
  * @Date: 2021-07-20 09:46:53
  * @LastEditors: zhj1214
- * @LastEditTime: 2022-05-13 13:30:58
+ * @LastEditTime: 2023-08-15 15:34:00
  */
 /**
  * @description: 对Date的扩展，将 Date 转化为指定格式的String
@@ -16,21 +16,21 @@
  * @author: zhj1214
  */
 
-Date.prototype.Format = function (fmt: string) {
-  const m = this.getMonth();
-  const o: AnyObject = {
+Date.prototype.Format = function (self: any, fmt = "YYYY-MM-DD HH:mm:ss.S") {
+  const m = self.getMonth();
+  const o: any = {
     "M+": m + 1, // 月份
-    "D+": this.getDate(), // 日
-    "H+": this.getHours(), // 小时
-    "m+": this.getMinutes(), // 分
-    "s+": this.getSeconds(), // 秒
+    "D+": self.getDate(), // 日
+    "H+": self.getHours(), // 小时
+    "m+": self.getMinutes(), // 分
+    "s+": self.getSeconds(), // 秒
     "Q+": Math.floor((m + 3) / 3), // 季度
-    S: this.getMilliseconds(), // 毫秒
+    S: self.getMilliseconds(), // 毫秒
   };
   if (/(Y+)/.test(fmt)) {
     fmt = fmt.replace(
       RegExp.$1,
-      `${this.getFullYear()}`.substr(4 - RegExp.$1.length)
+      `${self.getFullYear()}`.substr(4 - RegExp.$1.length)
     );
   }
   for (const k in o) {

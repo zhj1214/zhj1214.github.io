@@ -4,7 +4,7 @@
  * @Autor: zhj1214
  * @Date: 2021-09-04 09:36:40
  * @LastEditors: zhj1214
- * @LastEditTime: 2023-08-01 14:04:46
+ * @LastEditTime: 2023-08-15 15:33:27
  */
 import "../base/date";
 
@@ -16,11 +16,16 @@ export default {
    * @example (new Date()).Format("YYYY-MM-DD HH:mm:ss.S")
    * */
   getTimeFormat(date: any, format = "YYYY-MM-DD HH:mm:ss.S") {
-    const time =
-      Object.prototype.toString.call(date) === "[object Date]"
-        ? date
-        : new Date();
-    return time.Format(format);
+    if (!date) return "";
+    let time = null;
+    if (Object.prototype.toString.call(date) === "[object Date]") {
+      time = date;
+    } else if (typeof date === "string") {
+      time = new Date(Number(date));
+    } else {
+      time = new Date(date);
+    }
+    return time.Format(time, format);
   },
   /**
    * @description 公共方法定义文件，需要使用时可以在js文件中按需引入

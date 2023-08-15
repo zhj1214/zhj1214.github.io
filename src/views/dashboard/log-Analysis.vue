@@ -14,7 +14,7 @@
       :columns="pageData.columns"
       :paginationSeting="pageData.paginationSeting"
       style="width: 100%"
-      max-height="450"
+      max-height="550"
       stripe
       @done="(val:any) => (pageData.tableInstance = val)"
     >
@@ -83,7 +83,7 @@ import SpTable from "@/components/sp-table/sp-table.vue";
 import SpSearchpannel from "@/components/searchpannel/index.vue";
 import { ref, reactive, computed, onMounted, onBeforeMount } from "vue";
 import tool from "@/utils/tool";
-import { getErrorsList } from "@/apis/errors";
+import { getErrorsList, deleteError } from "@/apis/errors";
 import { app } from "@/mixin";
 
 const self = app();
@@ -247,7 +247,6 @@ const pageData = reactive({
 /******  生命周期 ******/
 onBeforeMount(() => {
   getList();
-  console.log("tool--", tool);
 });
 // 页面跳转
 const jumpPage = (val: any, type: string) => {
@@ -282,15 +281,16 @@ const deleteRow = (val: any) => {
         type: "success",
         message: "删除成功!",
       });
-      // self.$api.rights.deleteRights(val.id).then((res: any) => {
-      //   if (res) {
-      //     self.$message({
-      //       type: "success",
-      //       message: "删除成功!",
-      //     });
-      //     getList();
-      //   }
-      // });
+
+      deleteError({ id: val._id }).then((res: any) => {
+        if (res) {
+          self.$message({
+            type: "success",
+            message: "删除成功!",
+          });
+          getList();
+        }
+      });
     });
 };
 </script>

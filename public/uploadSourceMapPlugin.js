@@ -1,13 +1,14 @@
 const Path = require("path");
 const Fs = require("fs");
 const Axios = require("axios");
-const FormData = require("form-data");
+var AdmZip = require("adm-zip");
 const PLUGIN_NAME = "UploadSourceMapPlugin";
 const {
   createFileStreamChunk,
   calculateHashStream,
   splicingUploadParams,
   startUpload,
+  mkdirsSync,
 } = require("./uploadMaxFile");
 // 切片大小
 const CHUNK_SIZE = 8 * 1024 * 1024;
@@ -31,7 +32,7 @@ class UploadSourceMapPlugin {
       // 状态发生变化的时间；<br>    console.log(stats.ctime.toLocaleString())<br>
       // 判断是否是目录；是返回true；不是返回false；<br>    console.log(stats.isFile())<br>
       // 判断是否是文件；是返回true、不是返回false；<br>    console.log(stats.isDirectory())
-      // console.log(filepath, "--file--", stats.size);
+      // console.log(filepath, "--file--", stats);
       self.upload(filepath, stats.size);
     });
   }
@@ -52,14 +53,34 @@ class UploadSourceMapPlugin {
     } else {
       // 路径需要与 SourceMapDevToolPlugin 插件存放 sourcemap 文件的地址一致
       const sourcemapDir = Path.join("dist", "");
-      // console.log("--sourcemapDir--", sourcemapDir);
+      var self = this;
       (async () => {
-        console.log("Uploading sourcemap files...");
+        // 1.  获取 js.map 文件列表
         const files = await this.getAssets(Path.join(sourcemapDir, "js")); // 只上传 js 的 sourcemap 文件
-        // for (const file of files) {
-        //   await this.uploadFile(file);
-        // }
-        await this.uploadFile(files[0]);
+        // 2. 创建-压缩目录
+        const zipDir = `${Path.join(sourcemapDir, "js")}/sourceMap`;
+        mkdirsSync(zipDir);
+        let num = 0;
+
+        for (const file of files) {
+          // 3. 复制文件到压缩目录
+          const l = file.split("/");
+          const name = l[l.length - 1];
+          Fs.copyFile(file, zipDir + "/" + name, function () {
+            ++num;
+            // console.log(name, "--成功--", num, "--", files.length);
+            if (num === files.length) {
+              console.log("--所有文件 copy 完成--");
+              // 4. 压缩文件夹
+              const admzip = new AdmZip();
+              admzip.addLocalFolder(zipDir); // 压缩文件 admzip.addLocalFile(`${zipDir}.zip`);
+              admzip.writeZip(`${zipDir}.zip`);
+              // 5. 上传压缩文件
+              self.uploadFile(`${zipDir}.zip`);
+            }
+          });
+        }
+
         // 注意：node < 14.14.0 可以使用 Fs.promises.rmdir 替代
         // await Fs.promises.rm(sourcemapDir, { recursive: true });
       })();

@@ -4,12 +4,13 @@
  * @Autor: zhj1214
  * @Date: 2023-01-03 16:51:11
  * @LastEditors: zhj1214
- * @LastEditTime: 2023-08-23 17:56:00
+ * @LastEditTime: 2023-08-24 10:30:32
  */
 const sparkMD5 = require("spark-md5");
 const FormData = require("form-data");
 const Axios = require("axios");
 let fs = require("fs");
+const Path = require("path");
 // 切片大小
 const CHUNK_SIZE = 8 * 1024 * 1024;
 // 重试次数
@@ -171,7 +172,7 @@ const calculateHashStream = (chunks, hashProgressInfo) => {
 const splicingUploadParams = (chunksTemp, hash, uploadedList = [], ext) => {
   // 1. 组装上传数据
   const chunks = chunksTemp.map((chunk, index) => {
-    const name = hash + "-" + index;
+    const name = hash + (chunksTemp.length === 1 ? "" : "-") + index;
     // 是否已上传过这个片段
     const isChunkUploaded = uploadedList.includes(name) ? true : false;
     return {
@@ -191,7 +192,7 @@ const splicingUploadParams = (chunksTemp, hash, uploadedList = [], ext) => {
       let name = chunk.name;
       //  如果有切片的话，那么不能有扩展名称
       if (chunks.length === 1) {
-        name += `.${ext}`;
+        name += `${ext.startsWith(".") ? ext : "." + ext}`;
       }
       const form = new FormData();
       // 重点来了，这里一定要有三个参数，第三个参数是 文件名称（包括扩展名）name
@@ -278,6 +279,7 @@ const startUpload = (url, chunks, requests, limit = 1) => {
           timeout: 3000,
           data: form,
           params: {
+            progectName: "zhj1214",
             name: req.name,
             hash: req.hash,
             category: req.category,
@@ -316,6 +318,22 @@ const startUpload = (url, chunks, requests, limit = 1) => {
   });
 };
 
+/**
+ * @description: 是否存在改目录，不存在。则创建
+ * @param {*} dirname 目录名称
+ * @return {*} 存在 true
+ */
+const mkdirsSync = function (dirname) {
+  if (fs.existsSync(dirname)) {
+    return true;
+  } else {
+    if (mkdirsSync(Path.dirname(dirname))) {
+      fs.mkdirSync(dirname);
+      return true;
+    }
+  }
+};
+
 module.exports = {
   createFileChunk,
   createFileStreamChunk,
@@ -323,4 +341,5 @@ module.exports = {
   splicingUploadParams,
   startUpload,
   calculateHashStream,
+  mkdirsSync,
 };

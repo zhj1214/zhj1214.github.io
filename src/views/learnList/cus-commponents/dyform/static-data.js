@@ -1,4 +1,4 @@
-import Vue from 'vue'
+// import Vue from 'vue'
 // 原始线索表单：表头
 export const columns = [
   { title: '原始线索ID', width: 200, key: 'originId' },
@@ -583,31 +583,31 @@ export const addClueFormPreset = [
       change: (val, comId) => {
         console.log(addClueFormPreset, '省份：', val, '======', comId)
         if (val) {
-          Vue.prototype.$api
-            .getProvinceCityDistrictInfo({
-              parentCode: val
-            })
-            .then((res) => {
-              console.log('市-列表：', res)
-              addClueFormPreset.forEach((e, idx) => {
-                if (e.id === 'cityCode') {
-                  e.data.selectList = res.map((e) => {
-                    return {
-                      label: e.name,
-                      value: e.code
-                    }
-                  })
-                  // 通知组件进行修改 data 数据
-                  e.data.model = ''
-                  // Vue.prototype.$ebs.emit(`${e.type}-${idx}-`, e)
-                } else if (e.id === 'regionCode') {
-                  e.data.selectList = []
-                  e.data.model = ''
-                  // 通知组件进行修改 data 数据
-                  // Vue.prototype.$ebs.emit(`${e.type}-${idx}-`, e)
-                }
-              })
-            })
+          // Vue.prototype.$api
+          //   .getProvinceCityDistrictInfo({
+          //     parentCode: val
+          //   })
+          //   .then((res) => {
+          //     console.log('市-列表：', res)
+          //     addClueFormPreset.forEach((e, idx) => {
+          //       if (e.id === 'cityCode') {
+          //         e.data.selectList = res.map((e) => {
+          //           return {
+          //             label: e.name,
+          //             value: e.code
+          //           }
+          //         })
+          //         // 通知组件进行修改 data 数据
+          //         e.data.model = ''
+          //         // Vue.prototype.$ebs.emit(`${e.type}-${idx}-`, e)
+          //       } else if (e.id === 'regionCode') {
+          //         e.data.selectList = []
+          //         e.data.model = ''
+          //         // 通知组件进行修改 data 数据
+          //         // Vue.prototype.$ebs.emit(`${e.type}-${idx}-`, e)
+          //       }
+          //     })
+          //   })
         } else {
           addClueFormPreset.forEach((e, idx) => {
             if (e.id === 'cityCode') {
@@ -648,26 +648,26 @@ export const addClueFormPreset = [
       change: (val, comId) => {
         console.log(addClueFormPreset, '市份：', val, '======', comId)
         if (val) {
-          Vue.prototype.$api
-            .getProvinceCityDistrictInfo({
-              parentCode: val
-            })
-            .then((res) => {
-              console.log('市-列表：', res)
-              addClueFormPreset.forEach((e, idx) => {
-                if (e.id === 'regionCode') {
-                  e.data.selectList = res.map((e) => {
-                    return {
-                      label: e.name,
-                      value: e.code
-                    }
-                  })
-                  // 通知组件进行修改 data 数据
-                  e.data.model = ''
-                  // Vue.prototype.$ebs.emit(`${e.type}-${idx}-`, e)
-                }
-              })
-            })
+          // Vue.prototype.$api
+          //   .getProvinceCityDistrictInfo({
+          //     parentCode: val
+          //   })
+          //   .then((res) => {
+          //     console.log('市-列表：', res)
+          //     addClueFormPreset.forEach((e, idx) => {
+          //       if (e.id === 'regionCode') {
+          //         e.data.selectList = res.map((e) => {
+          //           return {
+          //             label: e.name,
+          //             value: e.code
+          //           }
+          //         })
+          //         // 通知组件进行修改 data 数据
+          //         e.data.model = ''
+          //         // Vue.prototype.$ebs.emit(`${e.type}-${idx}-`, e)
+          //       }
+          //     })
+          //   })
         } else {
           addClueFormPreset.forEach((e, idx) => {
             if (e.id === 'regionCode') {

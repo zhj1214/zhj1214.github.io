@@ -4,7 +4,7 @@
  * @Autor: zhj1214
  * @Date: 2023-01-03 16:51:11
  * @LastEditors: zhj1214
- * @LastEditTime: 2023-08-23 14:16:51
+ * @LastEditTime: 2023-08-23 17:56:00
  */
 const sparkMD5 = require("spark-md5");
 const FormData = require("form-data");
@@ -14,31 +14,6 @@ let fs = require("fs");
 const CHUNK_SIZE = 8 * 1024 * 1024;
 // 重试次数
 const ErrorRetryCount = 1;
-
-let http = Axios.create({
-  baseURL: "http://localhost:7001/errors/sourcemap",
-});
-// 请求拦截
-http.interceptors.request.use(
-  (config) => {
-    return config;
-  },
-  (err) => {
-    return Promise.reject(err);
-  }
-);
-// 响应拦截
-http.interceptors.response.use(
-  async (response) => {
-    let { data, config } = response;
-    // console.log("--response--", response);
-
-    return data;
-  },
-  (err) => {
-    return Promise.reject(err);
-  }
-);
 
 /**
  * @description: 计算文件切片始末位置
@@ -232,7 +207,16 @@ const splicingUploadParams = (chunksTemp, hash, uploadedList = [], ext) => {
       form.append("ext", ext);
       //  如果是切片上传，则增加标识
       form.append("isSliceUpload", `${chunks.length > 1}`);
-      return { form, index: chunk.index, error: 0 };
+      return {
+        form,
+        index: chunk.index,
+        error: 0,
+        name,
+        hash: chunk.hash,
+        category: chunks.length === 1 ? "" : chunk.hash.slice(0, 6),
+        ext,
+        isSliceUpload: `${chunks.length > 1}`,
+      };
     });
 
   return { requests, chunks };
@@ -258,7 +242,6 @@ const startUpload = (url, chunks, requests, limit = 1) => {
       const req = requests.shift();
       if (!req) return;
       const { form, index } = req;
-
       // 回调函数
       const fail = () => {
         chunks[index].progress = -1;
@@ -281,18 +264,26 @@ const startUpload = (url, chunks, requests, limit = 1) => {
           upLoadReq();
         }
       };
-    
+
       try {
         let length = await new Promise((resolve, reject) => {
           return form.getLength((err, length) =>
             err ? reject(err) : resolve(length)
           );
         });
+        // console.log("--请求参数：", form);
         const res = await Axios.default({
           url: `http://localhost:7001/errors/sourcemap${url}`,
           method: "POST",
           timeout: 3000,
           data: form,
+          params: {
+            name: req.name,
+            hash: req.hash,
+            category: req.category,
+            ext: req.ext,
+            isSliceUpload: req.isSliceUpload,
+          },
           headers: {
             ...form.getHeaders(), // 小心
             "Content-Length": length, // 谨慎
@@ -314,30 +305,6 @@ const startUpload = (url, chunks, requests, limit = 1) => {
       } catch (error) {
         console.log("---err---", error.response);
       }
-
-      // http
-      //   .post(url, form, {
-      //     onUploadProgress: (progress) => {
-      //       chunks[index].progress = Number(
-      //         ((progress.loaded / progress.total) * 100).toFixed(2)
-      //       );
-      //     },
-      //   })
-      //   .then((res) => {
-      //     console.log("--uploadstreamfile--", res);
-
-      //     // 这里的 code 一定要对，不然会：重试请求
-      //     if (res.code === 10000) {
-      //       success(res);
-      //     } else {
-      //       fail();
-      //     }
-      //   })
-      //   .catch((err) => {
-      //     console.log("---err---", err);
-
-      //     fail();
-      //   });
     };
 
     while (limit > 0) {

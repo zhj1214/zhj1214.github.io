@@ -77,6 +77,8 @@ class UploadSourceMapPlugin {
               admzip.writeZip(`${zipDir}.zip`);
               // 5. 上传压缩文件
               self.uploadFile(`${zipDir}.zip`);
+              // 6. 删除 创建的目录
+              Fs.promises.rm(zipDir, { recursive: true });
             }
           });
         }
@@ -139,7 +141,7 @@ class UploadSourceMapPlugin {
       // 将拼接后的切片数据赋值给原始数据
       this.chunks = chunks;
       // 上传需要上传的切片信息
-      this.uploadChunks(requests);
+      this.uploadChunks(requests, JSON.parse(JSON.stringify(chunks)));
     } catch (err) {
       console.error(Path.basename(filepath), err.message);
     }
@@ -148,12 +150,15 @@ class UploadSourceMapPlugin {
    * @description: 上传需要上传的切片信息
    * @param {*} requests
    */
-  async uploadChunks(requests) {
+  async uploadChunks(requests, chunks) {
     // console.log("需要上传的切片：", requests);
     // 并发，发送切片请求 3 代表一次并发3个请求上传 uploadstreamfile
-    startUpload("/uploadstreamfile", this.chunks, requests, 3).then((res) => {
+
+    startUpload("/uploadstreamfile", chunks, requests, 3).then((res) => {
       console.log("所有切片上传完成✅", res);
-      this.mergeFile(res.data);
+      if (chunks.length > 1) {
+        this.mergeFile(res.data);
+      }
     });
   }
   /**
@@ -208,9 +213,21 @@ class UploadSourceMapPlugin {
       });
   }
 }
+// 获取 shell 参数
+const argv = process.argv;
+// console.log("--argv--", argv);
+// 参数字符串
+const envStr = argv[2];
+const params = envStr && envStr.split(":");
+const key = params[0];
+const value = params[1];
+console.log("key：" + key);
+console.log("vaklue：" + value);
 
-// 手动触发
-const b = new UploadSourceMapPlugin();
-b.apply();
+// 是否手动运行
+if (key === "run" && value === "true") {
+  const b = new UploadSourceMapPlugin();
+  b.apply();
+}
 
 module.exports = UploadSourceMapPlugin;

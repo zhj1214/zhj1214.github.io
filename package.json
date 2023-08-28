@@ -6,7 +6,7 @@
     "dev": "vue-cli-service serve --mode devlocal",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "uploadSourceMap": "node ./public/uploadSourceMapPlugin.js",
+    "uploadSourceMap": "node ./public/uploadSourceMapPlugin.js run:true",
     "lint": "vue-cli-service lint",
     "preacp": "git add .",
     "acp": "git commit -m",

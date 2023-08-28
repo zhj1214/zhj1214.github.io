@@ -138,7 +138,7 @@ const getList = () => {
       pageData.tableData = res.data.map((item: any) => {
         return item;
       });
-      pageData.paginationSeting.pageTotal = res.total || 100;
+      pageData.paginationSeting.pageTotal = res.total || 0;
       pageData.loading = false;
     })
     .catch((err) => {

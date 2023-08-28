@@ -4,7 +4,7 @@
  * @Autor: zhj1214
  * @Date: 2023-01-03 16:51:11
  * @LastEditors: zhj1214
- * @LastEditTime: 2023-08-24 10:30:32
+ * @LastEditTime: 2023-08-24 14:27:24
  */
 const sparkMD5 = require("spark-md5");
 const FormData = require("form-data");
@@ -172,7 +172,7 @@ const calculateHashStream = (chunks, hashProgressInfo) => {
 const splicingUploadParams = (chunksTemp, hash, uploadedList = [], ext) => {
   // 1. 组装上传数据
   const chunks = chunksTemp.map((chunk, index) => {
-    const name = hash + (chunksTemp.length === 1 ? "" : "-") + index;
+    const name = hash + (chunksTemp.length === 1 ? "" : "-" + index);
     // 是否已上传过这个片段
     const isChunkUploaded = uploadedList.includes(name) ? true : false;
     return {

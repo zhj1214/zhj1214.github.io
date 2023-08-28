@@ -33,7 +33,7 @@ module.exports = defineConfig({
           threshold: 10240,
           minRatio: 0.8,
         }),
-        // new UploadSourceMapPlugin()
+        new UploadSourceMapPlugin()
       );
     }
     config.plugins = [...config.plugins, ...plugins];
